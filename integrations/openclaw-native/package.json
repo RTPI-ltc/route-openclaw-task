@@ -1,7 +1,7 @@
 {
-  "name": "route-openclaw-task",
-  "version": "0.2.0",
-  "description": "OpenClaw runtime adapter for the route-openclaw-task Skill",
+  "name": "task-compass",
+  "version": "0.3.0",
+  "description": "OpenClaw runtime adapter for Task Compass Skill",
   "type": "module",
   "license": "MIT",
   "engines": {

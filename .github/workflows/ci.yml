@@ -39,12 +39,15 @@ jobs:
         run: python scripts/validate_skill.py .
       - name: Verify release gates
         run: python scripts/verify_release.py .
+      - name: Scan tracked files and Git history for secrets
+        run: python scripts/scan_secrets.py --history
       - name: Build and validate host integrations
         run: |
           python scripts/build_integrations.py --output-dir dist/integrations
           python scripts/validate_integrations.py --build-dir dist/integrations
           python scripts/benchmark_integrations.py \
             --build-dir dist/integrations \
-            --output "${RUNNER_TEMP}/integrations-v0.2.json"
+            --output "${RUNNER_TEMP}/integrations-v0.3.json"
+          python scripts/validate_integrations.py --build-dir dist/integrations
       - name: Build reproducible archive
         run: python scripts/build_archive.py --output-dir dist

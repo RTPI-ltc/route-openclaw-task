@@ -6,12 +6,13 @@ workspace Skill, validates the route, maps at most two execution dependencies
 into a bounded planner target, and falls back without raising into the runtime.
 
 Use it only when the target files match the fingerprints in `integration.json`.
-Install the unchanged Skill at `skills/route-openclaw-task`, place
+Install the canonical Skill at `skills/task-compass` and retain the compatibility
+copy at `skills/route-openclaw-task`, place
 `planner_skill_adapter.py` under `backend/openclaw/`, retain the corresponding
 planner/search-planner call sites, and enable it with:
 
 ```bash
-OPENCLAW_PLANNER_SKILL=route-openclaw-task
+OPENCLAW_PLANNER_SKILL=task-compass
 ```
 
 Do not apply this file blindly to another planner API. Upstream OpenClaw users

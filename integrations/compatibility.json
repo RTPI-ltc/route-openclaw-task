@@ -1,8 +1,11 @@
 {
   "schema_version": "1.0",
-  "release_version": "0.2.0",
+  "release_version": "0.3.0",
   "core_skill": {
-    "name": "route-openclaw-task",
+    "name": "task-compass",
+    "legacy_names": [
+      "route-openclaw-task"
+    ],
     "behavioral_baseline": "v0.1.0",
     "behavioral_core_unchanged": true,
     "locked_files": {

@@ -1,6 +1,6 @@
-# OpenClaw Task Router
+# Task Compass Skill
 
-Deterministic, auditable planner routing for OpenClaw.
+Deterministic, auditable planning and safety routing for agent tasks.
 
 [![CI](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/ci.yml/badge.svg)](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/ci.yml)
 [![OpenClaw](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/openclaw-compat.yml/badge.svg)](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/openclaw-compat.yml)
@@ -11,7 +11,7 @@ Deterministic, auditable planner routing for OpenClaw.
 
 [中文说明](README.zh-CN.md) | [Integrations](docs/INTEGRATIONS.md) | [Benchmarks](docs/BENCHMARKS.md) | [Security](SECURITY.md) | [Architecture](docs/ARCHITECTURE.md)
 
-`route-openclaw-task` turns a natural-language task into a bounded JSON routing decision before any tool runs. It selects a planner profile, executor family, context policy, permission behavior, and next action while preserving OpenClaw's runtime permission engine as the final authority.
+`task-compass` turns a natural-language task into a bounded JSON routing decision before any tool runs. It selects a planner profile, executor family, context policy, permission behavior, and next action while preserving the host runtime's permission engine as the final authority.
 
 It is a router, not a command generator.
 
@@ -50,7 +50,7 @@ The same model, image, planner policy, and security controls were used on both s
 ### From GitHub
 
 ```bash
-openclaw skills install git:RTPI-ltc/route-openclaw-task@v0.2.0
+openclaw skills install git:RTPI-ltc/route-openclaw-task@v0.3.0 --as task-compass
 ```
 
 OpenClaw installs Git skills into the active workspace's `skills/` directory. Pin a release tag in production instead of tracking `main`.
@@ -59,24 +59,33 @@ OpenClaw installs Git skills into the active workspace's `skills/` directory. Pi
 
 ```bash
 git clone https://github.com/RTPI-ltc/route-openclaw-task.git
-openclaw skills install ./route-openclaw-task
+openclaw skills install ./route-openclaw-task --as task-compass
 ```
 
 Requirements: OpenClaw, Python 3.10 or newer, and no third-party Python packages. The release is install-and-run tested against the official OpenClaw `2026.6.11` image in a network-disabled, read-only-root container.
 
 ### Native Runtime Integration
 
-The v0.2 release also ships a version-constrained OpenClaw native plugin. It
+The v0.3 release ships a version-constrained OpenClaw native plugin. It
 routes every prompt through the unchanged core before planning and falls back
 to the baseline planner on any adapter error:
 
 ```bash
-openclaw plugins install ./route-openclaw-task-openclaw-native-v0.2.0.tar.gz
-openclaw plugins inspect route-openclaw-task --runtime --json
+openclaw plugins install ./task-compass-openclaw-native-v0.3.0.tar.gz
+openclaw plugins inspect task-compass --runtime --json
+```
+
+When upgrading the native plugin from v0.2, remove the old plugin before
+installing v0.3. Installing both archives side by side would register both
+prompt hooks:
+
+```bash
+openclaw plugins uninstall route-openclaw-task
+openclaw plugins install ./task-compass-openclaw-native-v0.3.0.tar.gz
 ```
 
 Codex and Claude Code plugin bundles are published from the same core. Their
-v0.2 evidence is offline contract E2E only: Codex was not modified or invoked,
+evidence is offline contract E2E only: Codex was not modified or invoked,
 and Claude Code was not installed or started. See the precise
 [compatibility matrix and evidence levels](docs/INTEGRATIONS.md).
 
@@ -135,6 +144,7 @@ The skill returns advisory policy. OpenClaw still owns candidate generation, sea
 - No subprocess, shell, network, dynamic download, or credential access in the router.
 - Models are JSON token-count tables, not executable weights.
 - Public model artifacts exclude raw prompts and pass sensitive-literal scanning.
+- Tracked files, sensitive filenames, and all Git-history blobs pass a redacted secret scan.
 - Incomplete tool dependencies cause abstention/replanning instead of guessing.
 - Mutation and production routes stay subject to OpenClaw confirmation policy.
 
@@ -148,6 +158,7 @@ python3 scripts/validate_skill.py .
 python3 scripts/verify_release.py .
 python3 scripts/build_integrations.py
 python3 scripts/validate_integrations.py
+python3 scripts/scan_secrets.py --history
 ```
 
 CI runs these checks on Python 3.10 through 3.13. Pull requests must include a routing test for behavior changes and must keep benchmark promotion gates green.
@@ -172,3 +183,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Security reports should follow [SECURITY
 ## License
 
 Code and project-authored content are released under the [MIT License](LICENSE). Training sources and benchmark references retain their original licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the [model card](references/model-card.md).
+
+`route-openclaw-task` remains available as a deprecated compatibility alias. The GitHub repository URL is unchanged so existing clones and release links continue to work.

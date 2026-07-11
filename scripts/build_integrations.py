@@ -11,11 +11,15 @@ import tarfile
 from pathlib import Path
 from typing import Iterable
 
+from scan_secrets import scan_paths
+
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_VERSION = "0.2.0"
-SKILL_FILES = (
-    "SKILL.md",
+DEFAULT_VERSION = "0.3.0"
+PACKAGE_NAME = "task-compass"
+CANONICAL_SKILL_NAME = "task-compass"
+LEGACY_SKILL_NAME = "route-openclaw-task"
+SKILL_PAYLOAD_FILES = (
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
     "scripts/route_task.py",
@@ -51,7 +55,7 @@ def build_integrations(root: Path, output: Path, version: str = DEFAULT_VERSION)
     checksums: list[str] = []
     for bundle_name in BUNDLES:
         template = root / "integrations" / bundle_name
-        destination = output / f"route-openclaw-task-{bundle_name}-v{version}"
+        destination = output / f"{PACKAGE_NAME}-{bundle_name}-v{version}"
         if destination.exists():
             shutil.rmtree(destination)
         shutil.copytree(
@@ -62,9 +66,16 @@ def build_integrations(root: Path, output: Path, version: str = DEFAULT_VERSION)
         shutil.copy2(root / "LICENSE", destination / "LICENSE")
         shutil.copy2(root / "integrations/compatibility.json", destination / "compatibility.json")
         if bundle_name != "local-audit-planner":
-            skill_root = destination / "skills" / "route-openclaw-task"
-            _copy_skill(root, skill_root)
-        archive = output / f"route-openclaw-task-{bundle_name}-v{version}.tar.gz"
+            canonical_root = destination / "skills" / CANONICAL_SKILL_NAME
+            legacy_root = destination / "skills" / LEGACY_SKILL_NAME
+            _copy_skill(root, canonical_root, root / "SKILL.md")
+            _copy_skill(root, legacy_root, root / "integrations/legacy-skill/SKILL.template")
+        bundle_files = sorted(path for path in destination.rglob("*") if path.is_file())
+        findings = scan_paths(destination, bundle_files, source=f"integration:{bundle_name}")
+        if findings:
+            summary = [f"{finding.kind}:{finding.path}" for finding in findings]
+            raise ValueError(f"integration secret scan failed: {summary}")
+        archive = output / f"{PACKAGE_NAME}-{bundle_name}-v{version}.tar.gz"
         _write_reproducible_archive(destination, archive)
         digest = _sha256(archive)
         checksums.append(f"{digest}  {archive.name}")
@@ -81,8 +92,10 @@ def build_integrations(root: Path, output: Path, version: str = DEFAULT_VERSION)
     return {"version": version, "bundles": built}
 
 
-def _copy_skill(root: Path, destination: Path) -> None:
-    for relative in SKILL_FILES:
+def _copy_skill(root: Path, destination: Path, manifest: Path) -> None:
+    destination.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(manifest, destination / "SKILL.md")
+    for relative in SKILL_PAYLOAD_FILES:
         source = root / relative
         target = destination / relative
         target.parent.mkdir(parents=True, exist_ok=True)

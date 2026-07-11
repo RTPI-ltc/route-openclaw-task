@@ -65,6 +65,13 @@ class IntegrationTest(unittest.TestCase):
         self.assertNotIn("String(error)", index)
         self.assertIn("errorCategory(error)", index)
 
+    def test_canonical_and_legacy_skill_names_are_packaged(self) -> None:
+        version = "0.3.0"
+        for host in ("openclaw-native", "codex", "claude-code"):
+            bundle = self.output / f"task-compass-{host}-v{version}"
+            self.assertTrue((bundle / "skills/task-compass/SKILL.md").is_file())
+            self.assertTrue((bundle / "skills/route-openclaw-task/SKILL.md").is_file())
+
 
 if __name__ == "__main__":
     unittest.main()

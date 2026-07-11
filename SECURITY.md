@@ -36,11 +36,11 @@ The skill returns advisory policy. OpenClaw's permission engine, sandbox, tool a
 
 - Runtime code uses only the Python standard library.
 - Public models are JSON and scanned for sensitive literal shapes.
-- CI validates the Skill schema, runs routing invariants, scans tracked release files, and builds a checksumed archive.
+- CI validates the Skill schema, runs routing invariants, scans tracked files and all Git-history blobs without printing matched values, and builds a checksumed archive.
+- `.gitignore` excludes environment files, credentials, private keys, certificates, host-owned agent configuration, local overrides, logs, and generated archives.
 - CodeQL runs on pushes, pull requests, and a weekly schedule.
 - Releases are built by GitHub Actions from tagged commits.
 
 ## Safe Deployment
 
 Run OpenClaw with a read-only repository mount, a read-only root filesystem when practical, dropped capabilities, no-new-privileges, restricted egress, scoped credentials, and explicit agent/tool allowlists. Installing this skill does not create those controls automatically.
-

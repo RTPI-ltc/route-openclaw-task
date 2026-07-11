@@ -2,7 +2,7 @@
 
 ## Summary
 
-`route-openclaw-task` bundles two small multinomial Naive Bayes classifiers implemented with the Python standard library:
+Task Compass Skill (`task-compass`, formerly `route-openclaw-task`) bundles two small multinomial Naive Bayes classifiers implemented with the Python standard library:
 
 - `profile-policy-model.json` predicts a planner profile, executor family, and policy prior for general task requests.
 - `tool-family-model.json` is a focused fallback for tasks that expose an `Available tool interfaces:` catalog.

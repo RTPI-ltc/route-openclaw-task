@@ -1,0 +1,20 @@
+---
+name: route-openclaw-task
+description: Compatibility alias for Task Compass Skill. Use only when an existing workflow explicitly invokes route-openclaw-task; use task-compass for new task-routing requests.
+license: MIT
+metadata: {"version":"0.3.0","deprecated":true,"canonical_name":"task-compass","compatibility":"OpenClaw, Codex, or Claude Code with Python 3.10 or newer; no network access or API key required","openclaw":{"requires":{"bins":["python3"]}}}
+---
+
+# Task Compass Compatibility Alias
+
+This Skill preserves existing `route-openclaw-task` invocations. New workflows should use `task-compass`.
+
+Run the bundled router from this compatibility directory:
+
+```bash
+python3 scripts/route_task.py --goal "<task>" --pretty
+```
+
+Treat its JSON as advisory policy input. Preserve `deny`, `await_human`, `replan`, `refuse`, explicit read-only boundaries, and `safety_guard=true`. Runtime permissions remain authoritative.
+
+Read [references/routing-contract.md](references/routing-contract.md) for the stable schema and [references/model-card.md](references/model-card.md) for provenance and limitations.

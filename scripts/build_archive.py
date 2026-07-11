@@ -6,12 +6,15 @@ import gzip
 import hashlib
 import io
 import json
+import subprocess
 import tarfile
 from pathlib import Path
 
+from scan_secrets import scan_paths
 
-PACKAGE_NAME = "route-openclaw-task"
-DEFAULT_VERSION = "0.2.0"
+
+PACKAGE_NAME = "task-compass"
+DEFAULT_VERSION = "0.3.0"
 EXCLUDED_PARTS = {".git", "__pycache__", ".pytest_cache", ".ruff_cache", "dist"}
 
 
@@ -26,18 +29,12 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     archive = output_dir / f"{PACKAGE_NAME}-v{args.version}.tar.gz"
 
-    directories = [
-        path
-        for path in sorted(root.rglob("*"))
-        if path.is_dir() and not set(path.relative_to(root).parts).intersection(EXCLUDED_PARTS)
-    ]
-    files = [
-        path
-        for path in sorted(root.rglob("*"))
-        if path.is_file()
-        and not set(path.relative_to(root).parts).intersection(EXCLUDED_PARTS)
-        and path.name != "SHA256SUMS"
-    ]
+    files = _release_files(root)
+    findings = scan_paths(root, files, source="release-archive")
+    if findings:
+        summary = [f"{finding.kind}:{finding.path}" for finding in findings]
+        raise ValueError(f"release archive secret scan failed: {summary}")
+    directories = _release_directories(root, files)
     with archive.open("wb") as raw:
         with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as compressed:
             with tarfile.open(fileobj=compressed, mode="w") as handle:
@@ -77,6 +74,46 @@ def _archive_info(name: str, *, mode: int, directory: bool = False) -> tarfile.T
     if directory:
         info.type = tarfile.DIRTYPE
     return info
+
+
+def _release_files(root: Path) -> list[Path]:
+    if (root / ".git").exists():
+        result = subprocess.run(
+            ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
+            cwd=root,
+            check=True,
+            capture_output=True,
+        )
+        relatives = [
+            Path(raw.decode("utf-8", errors="surrogateescape"))
+            for raw in result.stdout.split(b"\0")
+            if raw
+        ]
+    else:
+        relatives = [path.relative_to(root) for path in root.rglob("*") if path.is_file()]
+    files: list[Path] = []
+    for relative in sorted(relatives):
+        path = root / relative
+        if set(relative.parts).intersection(EXCLUDED_PARTS) or path.name in {
+            "SHA256SUMS",
+            "INTEGRATION_SHA256SUMS",
+        }:
+            continue
+        if path.is_symlink():
+            raise ValueError(f"release archive cannot contain symlink: {relative}")
+        if path.is_file():
+            files.append(path)
+    return files
+
+
+def _release_directories(root: Path, files: list[Path]) -> list[Path]:
+    relatives: set[Path] = set()
+    for path in files:
+        parent = path.relative_to(root).parent
+        while parent != Path("."):
+            relatives.add(parent)
+            parent = parent.parent
+    return [root / relative for relative in sorted(relatives)]
 
 
 if __name__ == "__main__":

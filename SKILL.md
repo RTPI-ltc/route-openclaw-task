@@ -1,22 +1,22 @@
 ---
-name: route-openclaw-task
-description: Classify task-oriented requests into an OpenClaw planner profile, execution tools, safety policy, model tier, context policy, and next action. Use when deciding how an agent task should be planned or delegated, selecting CLI, file, mobile GUI, mobile CLI, MCP, or deployment executors, determining whether to continue, replan, refuse, or await human approval, or evaluating routing behavior across benchmark tasks.
+name: task-compass
+description: Classify agent tasks into a planner profile, execution tools, safety policy, model tier, context policy, and next action. Use when deciding how a task should be planned or delegated, selecting CLI, file, mobile GUI, mobile CLI, MCP, or deployment executors, determining whether to continue, replan, refuse, or await human approval, or evaluating routing behavior across benchmark tasks.
 license: MIT
-metadata: {"version":"0.2.0","compatibility":"OpenClaw with Python 3.10 or newer; no network access or API key required","openclaw":{"requires":{"bins":["python3"]}}}
+metadata: {"version":"0.3.0","aliases":["route-openclaw-task"],"compatibility":"OpenClaw, Codex, or Claude Code with Python 3.10 or newer; no network access or API key required","openclaw":{"requires":{"bins":["python3"]}}}
 ---
 
-# Route OpenClaw Task
+# Task Compass Skill
 
 Produce a deterministic, auditable routing decision before planning or execution. Treat the result as advisory policy input; never use it to bypass runtime permission checks.
 
 ## OpenClaw Runtime Integration
 
-Install this repository as an OpenClaw workspace skill, or copy this directory to `skills/route-openclaw-task`. OpenClaw loads the instructions automatically; the bundled router is invoked explicitly when a deterministic route is needed.
+Install this repository as an OpenClaw workspace skill, or copy this directory to `skills/task-compass`. OpenClaw loads the instructions automatically; the bundled router is invoked explicitly when a deterministic route is needed. The deprecated `route-openclaw-task` name remains a compatibility alias.
 
 This project's optional `LocalAuditPlanner` adapter can enable automatic runtime routing with:
 
 ```bash
-OPENCLAW_PLANNER_SKILL=route-openclaw-task
+OPENCLAW_PLANNER_SKILL=task-compass
 ```
 
 When a task includes an `Available tool interfaces:` catalog, resolve the required tool dependency closure from the task intent and ignore unrelated distraction tools. The runtime adapter converts `execution_tools` into a bounded target path and passes it to OpenClaw's A*/Reflexion planner as an auditable desired-tool constraint. Candidate generation, permission decisions, risk checks, and verification remain owned by OpenClaw.

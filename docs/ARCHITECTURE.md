@@ -44,7 +44,7 @@ See [the model card](../references/model-card.md) for provenance and limitations
 
 The router returns advisory JSON. In the standard skill flow, the agent reads the decision before constructing its plan. In the optional deep integration, the decision becomes a bounded desired-tool constraint for `LocalAuditPlanner` search.
 
-The v0.2 native OpenClaw adapter is deliberately thinner: it registers
+The v0.3 native OpenClaw adapter is deliberately thinner: it registers
 `before_prompt_build`, invokes the unchanged router out of process without a
 shell, and appends a bounded advisory context. Codex and Claude Code bundles add
 only host-standard discovery metadata around the same Skill. No adapter owns

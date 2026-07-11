@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 import statistics
+import sys
 import time
 from pathlib import Path
 from types import ModuleType
@@ -13,6 +14,7 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.dont_write_bytecode = True
 BASE_GOALS = (
     "Read-only: inspect the repository planner architecture.",
     "Update the documentation file and run its focused validation.",
@@ -55,7 +57,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Benchmark built integration bundle parity.")
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--build-dir", type=Path, default=Path("dist/integrations"))
-    parser.add_argument("--output", type=Path, default=Path("benchmarks/integrations-v0.2.json"))
+    parser.add_argument("--output", type=Path, default=Path("benchmarks/integrations-v0.3.json"))
     args = parser.parse_args()
     root = args.root.resolve()
     build_dir = args.build_dir if args.build_dir.is_absolute() else root / args.build_dir
@@ -74,7 +76,7 @@ def benchmark(root: Path, build_dir: Path) -> dict[str, Any]:
     expected = [root_router.route_task(goal, permission_mode="DEFAULT") for goal in cases]
     hosts: dict[str, dict[str, Any]] = {}
     for host in ("openclaw-native", "codex", "claude-code"):
-        skill = build_dir / f"route-openclaw-task-{host}-v{version}" / "skills/route-openclaw-task"
+        skill = build_dir / f"task-compass-{host}-v{version}" / "skills/task-compass"
         router = _load_router(skill / "scripts/route_task.py", f"route_{host.replace('-', '_')}")
         latencies: list[float] = []
         exact = 0

@@ -14,6 +14,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from validate_skill import validate as validate_skill  # noqa: E402
+from scan_secrets import scan_filesystem  # noqa: E402
 
 
 REQUIRED_FILES = {
@@ -40,15 +41,16 @@ REQUIRED_FILES = {
     "scripts/build_integrations.py",
     "scripts/validate_integrations.py",
     "scripts/benchmark_integrations.py",
+    "scripts/scan_secrets.py",
     "benchmarks/manifest.json",
     "benchmarks/toolsandbox-integrated.json",
     "benchmarks/toolsandbox-router.json",
     "benchmarks/generalization-1k.json",
-    "benchmarks/integrations-v0.2.json",
+    "benchmarks/integrations-v0.3.json",
 }
 SECRET_PATTERNS = {
     "private_key": re.compile(r"BEGIN [A-Z ]*PRIVATE KEY"),
-    "openai_style_key": re.compile(r"(^|[^A-Za-z])sk-[A-Za-z0-9_\-]{16,}"),
+    "openai_style_key": re.compile(r"(?<![A-Za-z0-9])sk-[A-Za-z0-9._/+=-]{16,}"),
     "aws_access_key": re.compile(r"\bAKIA[A-Z0-9]{16}\b"),
 }
 MODEL_SENSITIVE_PATTERNS = {
@@ -85,6 +87,8 @@ def verify(root: Path) -> list[str]:
             for name, pattern in SECRET_PATTERNS.items():
                 if pattern.search(text):
                     errors.append(f"{name} pattern in {path.relative_to(root)}")
+    for finding in scan_filesystem(root):
+        errors.append(f"secret scan finding {finding.kind} in {finding.path}")
     _verify_models(root, errors)
     _verify_runtime(root, errors)
     _verify_benchmarks(root, errors)
@@ -152,7 +156,7 @@ def _verify_benchmarks(root: Path, errors: list[str]) -> None:
             errors.append("integrated ToolSandbox promotion gate failed")
         if float(summary["safety_rate"]) != 1.0 or float(summary["qwen_success_rate"]) != 1.0:
             errors.append("integrated ToolSandbox safety/model gate failed")
-    integrations = root / "benchmarks/integrations-v0.2.json"
+    integrations = root / "benchmarks/integrations-v0.3.json"
     if integrations.is_file():
         payload = json.loads(integrations.read_text(encoding="utf-8"))
         if int(payload.get("case_generation", {}).get("cases", 0)) < 200:
@@ -201,8 +205,8 @@ def _verify_release_manifest(root: Path, errors: list[str]) -> None:
         errors.append("missing release-manifest.json")
         return
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("version") != "0.2.0":
-        errors.append("release manifest version must be 0.2.0")
+    if payload.get("name") != "task-compass" or payload.get("version") != "0.3.0":
+        errors.append("release manifest name/version must be task-compass 0.3.0")
     validation = payload.get("compatibility_validation", {})
     if validation.get("openclaw_version") != "2026.6.11":
         errors.append("release manifest must record the tested OpenClaw version")
@@ -216,6 +220,9 @@ def _verify_release_manifest(root: Path, errors: list[str]) -> None:
         "before_prompt_build_hook_registered",
         "embedded_skill_eligible",
         "installed_bridge_executed",
+        "tracked_secret_scan_passed",
+        "git_history_secret_scan_passed",
+        "sensitive_filename_gate_passed",
     )
     if not all(validation.get(key) is True for key in required):
         errors.append("release manifest has incomplete OpenClaw compatibility evidence")
@@ -225,6 +232,23 @@ def _verify_release_manifest(root: Path, errors: list[str]) -> None:
     for host in ("codex", "claude_code"):
         if integrations.get(host, {}).get("native_host_executed") is not False:
             errors.append(f"release manifest must not claim native {host} execution")
+    migration = payload.get("name_migration", {})
+    if migration.get("canonical_skill") != "task-compass":
+        errors.append("release manifest canonical skill must be task-compass")
+    if migration.get("legacy_skill") != "route-openclaw-task":
+        errors.append("release manifest legacy skill must be route-openclaw-task")
+    if not all(
+        migration.get(key) is True
+        for key in (
+            "legacy_skill_packaged",
+            "openclaw_legacy_plugin_id_declared",
+            "safe_native_upgrade_e2e_passed",
+            "repository_url_unchanged",
+        )
+    ):
+        errors.append("release manifest has incomplete name-migration evidence")
+    if migration.get("side_by_side_native_upgrade_supported") is not False:
+        errors.append("release manifest must reject side-by-side native plugin upgrades")
     source_hashes = payload.get("source_hashes", {})
     source_files = {
         "SKILL.md": "SKILL.md",

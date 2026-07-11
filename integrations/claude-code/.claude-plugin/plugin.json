@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "route-openclaw-task",
-  "version": "0.2.0",
+  "name": "task-compass",
+  "version": "0.3.0",
   "description": "Deterministic task routing policy packaged as an Agent Skill.",
   "author": {
     "name": "RTPI-ltc",

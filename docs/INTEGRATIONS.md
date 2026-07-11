@@ -1,6 +1,6 @@
 # Host Integrations
 
-Version 0.2 packages one hash-locked Skill for multiple agent hosts. The
+Version 0.3 packages one hash-locked Skill for multiple agent hosts. The
 router, model tables, and routing contract are byte-identical to v0.1.0; each
 adapter only handles host discovery, invocation, bounded context transfer, and
 failure fallback.
@@ -22,11 +22,11 @@ built package.
 
 ## OpenClaw native plugin
 
-Install the `route-openclaw-task-openclaw-native-v0.2.0.tar.gz` release asset:
+Install the `task-compass-openclaw-native-v0.3.0.tar.gz` release asset:
 
 ```bash
-openclaw plugins install ./route-openclaw-task-openclaw-native-v0.2.0.tar.gz
-openclaw plugins inspect route-openclaw-task --runtime --json
+openclaw plugins install ./task-compass-openclaw-native-v0.3.0.tar.gz
+openclaw plugins inspect task-compass --runtime --json
 ```
 
 The plugin registers only `before_prompt_build`. It invokes the bundled Python
@@ -40,29 +40,30 @@ filesystem, all Linux capabilities dropped, and `no-new-privileges`.
 
 ## Codex bundle
 
-The `route-openclaw-task-codex-v0.2.0.tar.gz` asset contains:
+The `task-compass-codex-v0.3.0.tar.gz` asset contains:
 
 ```text
 .codex-plugin/plugin.json
-skills/route-openclaw-task/SKILL.md
-skills/route-openclaw-task/scripts/...
-skills/route-openclaw-task/assets/...
+skills/task-compass/SKILL.md
+skills/task-compass/scripts/...
+skills/task-compass/assets/...
+skills/route-openclaw-task/SKILL.md  # compatibility alias
 ```
 
 It does not contain hooks, MCP servers, apps, credentials, or host
 configuration. Installation is intentionally left to the target Codex
-environment; v0.2 validation does not mutate the owner's Codex setup.
+environment; v0.3 validation does not mutate the owner's Codex setup.
 
 ## Claude Code bundle
 
-The `route-openclaw-task-claude-code-v0.2.0.tar.gz` asset uses the standard
+The `task-compass-claude-code-v0.3.0.tar.gz` asset uses the standard
 `.claude-plugin/plugin.json` plus `skills/` layout. Its declared compatibility
 range is `>=2.1.142 <3.0.0`. The official manifest schema snapshot URL,
 generation timestamp, and SHA-256 are recorded in the compatibility contract.
 
 The package can be tested by an operator in a separate Claude Code environment
 using that host's `--plugin-dir` flow. This project did not execute that command
-for v0.2.
+for v0.3.
 
 ## LocalAuditPlanner adapter
 
@@ -84,3 +85,16 @@ and executes the router from each generated host bundle. Promotion requires:
 This integration benchmark proves packaging and adapter parity. Capability
 quality remains grounded in the separate 258-task ToolSandbox and 1,000-task
 generalization evaluations.
+
+## Name migration
+
+`task-compass` is the canonical Skill and plugin id from v0.3 onward. Bundles
+also contain a low-trigger compatibility Skill named `route-openclaw-task`,
+and the OpenClaw manifest declares that id in `legacyPluginIds`. Existing
+explicit calls and `OPENCLAW_PLANNER_SKILL=route-openclaw-task` remain valid;
+new integrations should use `task-compass`.
+
+OpenClaw does not automatically delete an installed legacy plugin directory.
+For a native-plugin upgrade, uninstall `route-openclaw-task` before installing
+the v0.3 `task-compass` archive. Side-by-side native installation is not a
+supported migration path because both plugins would register prompt hooks.

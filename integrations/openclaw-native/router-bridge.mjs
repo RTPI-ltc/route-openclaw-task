@@ -42,10 +42,10 @@ export async function routePrompt(prompt, options = {}) {
     return null;
   }
   const pluginRoot = options.pluginRoot || MODULE_ROOT;
-  const script = join(pluginRoot, "skills", "route-openclaw-task", "scripts", "route_task.py");
+  const script = join(pluginRoot, "skills", "task-compass", "scripts", "route_task.py");
   const goal = prompt.slice(0, config.maxPromptChars);
   const { stdout } = await execFileAsync(config.pythonBin, [script, "--goal", goal], {
-    cwd: join(pluginRoot, "skills", "route-openclaw-task"),
+    cwd: join(pluginRoot, "skills", "task-compass"),
     timeout: config.timeoutMs,
     maxBuffer: 1024 * 1024,
     windowsHide: true,
@@ -58,7 +58,7 @@ export async function routePrompt(prompt, options = {}) {
   });
   const decision = JSON.parse(stdout);
   if (decision?.schema_version !== "1.0") {
-    throw new Error("route-openclaw-task returned an unsupported schema version");
+    throw new Error("task-compass returned an unsupported schema version");
   }
   return decision;
 }
@@ -71,10 +71,10 @@ export function buildRouteContext(decision) {
     }
   }
   return [
-    "<route-openclaw-task advisory=\"true\">",
+    "<task-compass advisory=\"true\">",
     JSON.stringify(bounded),
     "Preserve refuse, await_human, replan, confirmation, read-only, and safety constraints. OpenClaw runtime permissions remain authoritative.",
-    "</route-openclaw-task>",
+    "</task-compass>",
   ].join("\n");
 }
 

@@ -2,8 +2,8 @@ import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { buildRouteContext, routePrompt } from "./router-bridge.mjs";
 
 export default definePluginEntry({
-  id: "route-openclaw-task",
-  name: "Route OpenClaw Task",
+  id: "task-compass",
+  name: "Task Compass Skill",
   description: "Injects a deterministic advisory route before prompt construction.",
   register(api) {
     api.on(
@@ -17,7 +17,7 @@ export default definePluginEntry({
           return { appendContext: buildRouteContext(decision) };
         } catch (error) {
           api.logger.warn?.(
-            `route-openclaw-task: router unavailable; using baseline planner (${errorCategory(error)})`,
+            `task-compass: router unavailable; using baseline planner (${errorCategory(error)})`,
           );
           return;
         }

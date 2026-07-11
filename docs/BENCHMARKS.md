@@ -17,7 +17,7 @@ Source: [Apple ToolSandbox](https://github.com/apple/ToolSandbox), commit `16584
 
 ### Integrated OpenClaw Comparison
 
-Both sides used the same OpenClaw image, Qwen3.7-Max endpoint, `OPENCLAW_MODEL_PLANNER_POLICY=always`, six-shard concurrency, read-only repository mount, read-only root filesystem, dropped capabilities, and no-new-privileges. The optimized runtime enabled `route-openclaw-task`; the baseline did not.
+Both sides used the same OpenClaw image, Qwen3.7-Max endpoint, `OPENCLAW_MODEL_PLANNER_POLICY=always`, six-shard concurrency, read-only repository mount, read-only root filesystem, dropped capabilities, and no-new-privileges. The optimized runtime enabled the router now published as `task-compass`; the baseline did not.
 
 | Metric | Baseline | With Skill | Delta |
 |---|---:|---:|---:|
@@ -69,8 +69,9 @@ Files:
 - `benchmarks/generalization-1k.json`
 - `benchmarks/manifest.json`
 - `benchmarks/integrations-v0.2.json`
+- `benchmarks/integrations-v0.3.json`
 
-## v0.2 Integration Contract Benchmark
+## v0.3 Integration Contract Benchmark
 
 The bundle gate generates 240 safe synthetic variations from 12 task intents
 and 20 context modifiers. It executes the embedded router from the OpenClaw,
