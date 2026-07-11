@@ -2,7 +2,7 @@
 
 面向 OpenClaw 的确定性、可审计 planner 路由 Skill。
 
-[English](README.md) | [完整评测](docs/BENCHMARKS.md) | [安全策略](SECURITY.md) | [架构](docs/ARCHITECTURE.md)
+[English](README.md) | [宿主集成](docs/INTEGRATIONS.md) | [完整评测](docs/BENCHMARKS.md) | [安全策略](SECURITY.md) | [架构](docs/ARCHITECTURE.md)
 
 `route-openclaw-task` 在工具执行前，把自然语言任务转换成有界 JSON 决策：planner profile、执行器类型、上下文策略、权限行为和下一步动作。它不会生成命令，也不会替代 OpenClaw 的权限引擎。
 
@@ -23,7 +23,7 @@
 ## 安装
 
 ```bash
-openclaw skills install git:RTPI-ltc/route-openclaw-task@v0.1.0
+openclaw skills install git:RTPI-ltc/route-openclaw-task@v0.2.0
 ```
 
 本地安装：
@@ -34,6 +34,21 @@ openclaw skills install ./route-openclaw-task
 ```
 
 要求 Python 3.10+，不需要第三方 Python 包、网络或 API key。发布流程会在官方 OpenClaw `2026.6.11` 镜像中，以断网、只读根文件系统方式验证安装、识别和执行。
+
+### v0.2 宿主集成
+
+v0.2 额外发布 OpenClaw 原生插件，它会在 prompt 构建前调用同一套 router，
+adapter 超时或失败时回退到原 planner：
+
+```bash
+openclaw plugins install ./route-openclaw-task-openclaw-native-v0.2.0.tar.gz
+openclaw plugins inspect route-openclaw-task --runtime --json
+```
+
+同一核心还会构建 Codex 和 Claude Code 标准插件包。按照本次约束，Codex
+没有被修改或调用，Claude Code 也没有安装或启动；这两项只声明离线 manifest、
+目录发现、核心哈希和包内执行验证，不冒充原生 runtime E2E。详细版本范围与证据
+等级见 [宿主集成说明](docs/INTEGRATIONS.md)。
 
 ## 快速使用
 
@@ -66,6 +81,8 @@ python3 scripts/validate_route.py routes.jsonl
 python3 -m unittest discover -s tests -v
 python3 scripts/validate_skill.py .
 python3 scripts/verify_release.py .
+python3 scripts/build_integrations.py
+python3 scripts/validate_integrations.py
 ```
 
 项目代码采用 [MIT License](LICENSE)，第三方数据和 benchmark 保留原始许可，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。

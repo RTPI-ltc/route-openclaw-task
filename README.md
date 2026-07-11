@@ -9,7 +9,7 @@ Deterministic, auditable planner routing for OpenClaw.
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://www.python.org/)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-111827.svg)](https://agentskills.io/)
 
-[中文说明](README.zh-CN.md) | [Benchmarks](docs/BENCHMARKS.md) | [Security](SECURITY.md) | [Architecture](docs/ARCHITECTURE.md)
+[中文说明](README.zh-CN.md) | [Integrations](docs/INTEGRATIONS.md) | [Benchmarks](docs/BENCHMARKS.md) | [Security](SECURITY.md) | [Architecture](docs/ARCHITECTURE.md)
 
 `route-openclaw-task` turns a natural-language task into a bounded JSON routing decision before any tool runs. It selects a planner profile, executor family, context policy, permission behavior, and next action while preserving OpenClaw's runtime permission engine as the final authority.
 
@@ -50,7 +50,7 @@ The same model, image, planner policy, and security controls were used on both s
 ### From GitHub
 
 ```bash
-openclaw skills install git:RTPI-ltc/route-openclaw-task@v0.1.0
+openclaw skills install git:RTPI-ltc/route-openclaw-task@v0.2.0
 ```
 
 OpenClaw installs Git skills into the active workspace's `skills/` directory. Pin a release tag in production instead of tracking `main`.
@@ -63,6 +63,22 @@ openclaw skills install ./route-openclaw-task
 ```
 
 Requirements: OpenClaw, Python 3.10 or newer, and no third-party Python packages. The release is install-and-run tested against the official OpenClaw `2026.6.11` image in a network-disabled, read-only-root container.
+
+### Native Runtime Integration
+
+The v0.2 release also ships a version-constrained OpenClaw native plugin. It
+routes every prompt through the unchanged core before planning and falls back
+to the baseline planner on any adapter error:
+
+```bash
+openclaw plugins install ./route-openclaw-task-openclaw-native-v0.2.0.tar.gz
+openclaw plugins inspect route-openclaw-task --runtime --json
+```
+
+Codex and Claude Code plugin bundles are published from the same core. Their
+v0.2 evidence is offline contract E2E only: Codex was not modified or invoked,
+and Claude Code was not installed or started. See the precise
+[compatibility matrix and evidence levels](docs/INTEGRATIONS.md).
 
 ## 60-Second Demo
 
@@ -112,7 +128,7 @@ flowchart LR
     H --> I[Verifier and audit log]
 ```
 
-The skill returns advisory policy. OpenClaw still owns candidate generation, search, permission decisions, execution, and verification. An optional deep integration for `LocalAuditPlanner` is documented in [OpenClaw integration](docs/OPENCLAW_INTEGRATION.md).
+The skill returns advisory policy. OpenClaw still owns candidate generation, search, permission decisions, execution, and verification. The portable native plugin and the separately version-locked `LocalAuditPlanner` research adapter are documented in [OpenClaw integration](docs/OPENCLAW_INTEGRATION.md).
 
 ## Security
 
@@ -130,6 +146,8 @@ Read [SECURITY.md](SECURITY.md) before connecting the skill to privileged tools.
 python3 -m unittest discover -s tests -v
 python3 scripts/validate_skill.py .
 python3 scripts/verify_release.py .
+python3 scripts/build_integrations.py
+python3 scripts/validate_integrations.py
 ```
 
 CI runs these checks on Python 3.10 through 3.13. Pull requests must include a routing test for behavior changes and must keep benchmark promotion gates green.
@@ -143,6 +161,7 @@ assets/                  Auditable Naive Bayes model tables
 references/              Routing contract and model card
 tests/                   Offline unit, CLI, invariant, and packaging tests
 docs/                    Architecture, integration, and benchmark details
+integrations/            Host manifests and thin adapter templates
 examples/                Safe synthetic input examples
 ```
 

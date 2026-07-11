@@ -68,6 +68,20 @@ Files:
 - `benchmarks/toolsandbox-router.json`
 - `benchmarks/generalization-1k.json`
 - `benchmarks/manifest.json`
+- `benchmarks/integrations-v0.2.json`
+
+## v0.2 Integration Contract Benchmark
+
+The bundle gate generates 240 safe synthetic variations from 12 task intents
+and 20 context modifiers. It executes the embedded router from the OpenClaw,
+Codex, and Claude Code release bundles. All three require 100% schema validity,
+100% exact output parity with the root Skill, and 100% safety-field integrity.
+
+This is a packaging and adapter E2E benchmark, not a new capability-quality
+dataset. Capability claims remain tied to the independently sourced
+ToolSandbox and 1,000-task suites above. OpenClaw additionally receives a native
+official-container install/load/bridge test; Codex and Claude Code remain
+offline-contract-only by explicit constraint.
 
 ## Reproduction
 
@@ -76,6 +90,9 @@ Unit and synthetic acceptance tests require no network:
 ```bash
 python3 -m unittest discover -s tests -v
 python3 scripts/verify_release.py .
+python3 scripts/build_integrations.py
+python3 scripts/validate_integrations.py
+python3 scripts/benchmark_integrations.py
 ```
 
 The full ToolSandbox and 1,000-task evaluations require separately obtained upstream datasets or the OpenClaw optimization research workspace. They are intentionally not downloaded by the skill.
@@ -86,4 +103,3 @@ The full ToolSandbox and 1,000-task evaluations require separately obtained upst
 - The integrated comparison uses one hosted model family and one OpenClaw planner implementation.
 - Holdout contains 46 ToolSandbox tasks; broader claims require more independently sourced task suites.
 - Mean remote-model latency did not improve materially. The skill improves route quality, not model serving speed.
-

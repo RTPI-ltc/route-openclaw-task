@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -29,10 +30,21 @@ REQUIRED_FILES = {
     "assets/tool-family-model.json",
     "references/routing-contract.md",
     "references/model-card.md",
+    "docs/INTEGRATIONS.md",
+    "integrations/compatibility.json",
+    "integrations/openclaw-native/openclaw.plugin.json",
+    "integrations/openclaw-native/package.json",
+    "integrations/openclaw-native/index.mjs",
+    "integrations/codex/.codex-plugin/plugin.json",
+    "integrations/claude-code/.claude-plugin/plugin.json",
+    "scripts/build_integrations.py",
+    "scripts/validate_integrations.py",
+    "scripts/benchmark_integrations.py",
     "benchmarks/manifest.json",
     "benchmarks/toolsandbox-integrated.json",
     "benchmarks/toolsandbox-router.json",
     "benchmarks/generalization-1k.json",
+    "benchmarks/integrations-v0.2.json",
 }
 SECRET_PATTERNS = {
     "private_key": re.compile(r"BEGIN [A-Z ]*PRIVATE KEY"),
@@ -140,6 +152,29 @@ def _verify_benchmarks(root: Path, errors: list[str]) -> None:
             errors.append("integrated ToolSandbox promotion gate failed")
         if float(summary["safety_rate"]) != 1.0 or float(summary["qwen_success_rate"]) != 1.0:
             errors.append("integrated ToolSandbox safety/model gate failed")
+    integrations = root / "benchmarks/integrations-v0.2.json"
+    if integrations.is_file():
+        payload = json.loads(integrations.read_text(encoding="utf-8"))
+        if int(payload.get("case_generation", {}).get("cases", 0)) < 200:
+            errors.append("integration benchmark must contain at least 200 cases")
+        for host, metrics in payload.get("hosts", {}).items():
+            if float(metrics.get("exact_core_parity", 0.0)) != 1.0:
+                errors.append(f"integration exact-core parity failed for {host}")
+            if float(metrics.get("schema_valid_rate", 0.0)) != 1.0:
+                errors.append(f"integration schema gate failed for {host}")
+            if float(metrics.get("safety_invariant_rate", 0.0)) != 1.0:
+                errors.append(f"integration safety-field gate failed for {host}")
+    manifest_path = root / "benchmarks/manifest.json"
+    if manifest_path.is_file():
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        for name, expected in manifest.get("files", {}).items():
+            evidence = root / "benchmarks" / name
+            if not evidence.is_file():
+                errors.append(f"benchmark manifest references missing file: {name}")
+                continue
+            actual = hashlib.sha256(evidence.read_bytes()).hexdigest()
+            if actual != expected:
+                errors.append(f"benchmark evidence hash mismatch: {name}")
 
 
 def _verify_markdown_links(root: Path, errors: list[str]) -> None:
@@ -166,12 +201,42 @@ def _verify_release_manifest(root: Path, errors: list[str]) -> None:
         errors.append("missing release-manifest.json")
         return
     payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("version") != "0.2.0":
+        errors.append("release manifest version must be 0.2.0")
     validation = payload.get("compatibility_validation", {})
     if validation.get("openclaw_version") != "2026.6.11":
         errors.append("release manifest must record the tested OpenClaw version")
-    required = ("network_disabled", "read_only_root", "skill_eligible", "offline_route_executed")
+    required = (
+        "network_disabled",
+        "read_only_root",
+        "skill_eligible",
+        "offline_route_executed",
+        "native_plugin_installed",
+        "native_plugin_runtime_loaded",
+        "before_prompt_build_hook_registered",
+        "embedded_skill_eligible",
+        "installed_bridge_executed",
+    )
     if not all(validation.get(key) is True for key in required):
         errors.append("release manifest has incomplete OpenClaw compatibility evidence")
+    integrations = payload.get("integration_validation", {})
+    if integrations.get("openclaw", {}).get("native_host_executed") is not True:
+        errors.append("release manifest must record native OpenClaw execution")
+    for host in ("codex", "claude_code"):
+        if integrations.get(host, {}).get("native_host_executed") is not False:
+            errors.append(f"release manifest must not claim native {host} execution")
+    source_hashes = payload.get("source_hashes", {})
+    source_files = {
+        "SKILL.md": "SKILL.md",
+        "route_task.py": "scripts/route_task.py",
+        "profile-policy-model.json": "assets/profile-policy-model.json",
+        "tool-family-model.json": "assets/tool-family-model.json",
+        "routing-contract.md": "references/routing-contract.md",
+    }
+    for name, relative in source_files.items():
+        actual = hashlib.sha256((root / relative).read_bytes()).hexdigest()
+        if source_hashes.get(name) != actual:
+            errors.append(f"release source hash mismatch for {name}")
 
 
 def _is_text(path: Path) -> bool:

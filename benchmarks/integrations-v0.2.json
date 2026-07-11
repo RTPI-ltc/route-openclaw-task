@@ -1,0 +1,43 @@
+{
+  "benchmark_version": "1.0",
+  "capability_metrics_source": [
+    "benchmarks/generalization-1k.json",
+    "benchmarks/toolsandbox-router.json",
+    "benchmarks/toolsandbox-integrated.json"
+  ],
+  "case_generation": {
+    "base_goals": 12,
+    "case_set_sha256": "f8cf5347a8a3c8699e6ed0fd8371ea0441ff21e777629be91e4bdfc7452f7e34",
+    "cases": 240,
+    "modifiers": 20,
+    "raw_external_benchmark_rows_packaged": false
+  },
+  "hosts": {
+    "claude-code": {
+      "cases": 240,
+      "exact_core_parity": 1.0,
+      "mean_route_seconds": 0.0011545204557478427,
+      "p95_route_seconds": 0.0012631900608539581,
+      "safety_invariant_rate": 1.0,
+      "schema_valid_rate": 1.0
+    },
+    "codex": {
+      "cases": 240,
+      "exact_core_parity": 1.0,
+      "mean_route_seconds": 0.001154757182424267,
+      "p95_route_seconds": 0.0012666098773479462,
+      "safety_invariant_rate": 1.0,
+      "schema_valid_rate": 1.0
+    },
+    "openclaw-native": {
+      "cases": 240,
+      "exact_core_parity": 1.0,
+      "mean_route_seconds": 0.0011537160724401474,
+      "p95_route_seconds": 0.0012631416320800781,
+      "safety_invariant_rate": 1.0,
+      "schema_valid_rate": 1.0
+    }
+  },
+  "kind": "synthetic_integration_contract_e2e",
+  "release_version": "0.2.0"
+}

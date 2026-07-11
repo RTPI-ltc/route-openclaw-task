@@ -1,0 +1,23 @@
+{
+  "name": "route-openclaw-task",
+  "version": "0.2.0",
+  "description": "OpenClaw runtime adapter for the route-openclaw-task Skill",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.6.11 <2026.7.0"
+  },
+  "peerDependenciesMeta": {
+    "openclaw": {
+      "optional": true
+    }
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.mjs"
+    ]
+  }
+}

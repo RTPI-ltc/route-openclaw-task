@@ -1,6 +1,6 @@
 {
   "name": "route-openclaw-task",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": "https://github.com/RTPI-ltc/route-openclaw-task",
   "runtime_dependencies": [
     "python>=3.10"
@@ -15,15 +15,41 @@
     "network_disabled": true,
     "read_only_root": true,
     "skill_eligible": true,
-    "offline_route_executed": true
+    "offline_route_executed": true,
+    "native_plugin_installed": true,
+    "native_plugin_runtime_loaded": true,
+    "before_prompt_build_hook_registered": true,
+    "embedded_skill_eligible": true,
+    "installed_bridge_executed": true
+  },
+  "integration_validation": {
+    "openclaw": {
+      "host_constraint": ">=2026.6.11 <2026.7.0",
+      "mode": "native_container_e2e",
+      "native_host_executed": true
+    },
+    "codex": {
+      "host_constraint": ".codex-plugin/plugin.json contract documented 2026-07-11",
+      "mode": "offline_contract_e2e",
+      "official_manifest_validator_passed": true,
+      "native_host_executed": false
+    },
+    "claude_code": {
+      "host_constraint": ">=2.1.142 <3.0.0",
+      "mode": "offline_contract_e2e",
+      "schema_sha256": "3f69938d71a47a72fa60050b2050dd620054708911defc1c1dcd7188dcb169f5",
+      "official_manifest_schema_passed": true,
+      "native_host_executed": false
+    }
   },
   "raw_training_rows_included": false,
   "raw_benchmark_prompts_included": false,
   "source_hashes": {
-    "SKILL.md": "2f5a7f971508bc948b22c6901448d04ec5725b559b2b1d0710478dd7a2c5563a",
+    "SKILL.md": "f2f4acca59a99e5bfbfc50c84fa3c20164ed6a35e3e3b1c7e6387a978079f689",
     "route_task.py": "2f2cdbd437acb2be24eaa69a9f7bf9970f1330033760a97ddb02459a32866bcb",
     "profile-policy-model.json": "2af891d851a2ac1a32f7382b1b98b894467c1710a416c2f419f00b3ff74aa6fe",
-    "tool-family-model.json": "5f52ab87478b1ea9152029ff90e1150d8337b937493e6e8477617ee698315f3f"
+    "tool-family-model.json": "5f52ab87478b1ea9152029ff90e1150d8337b937493e6e8477617ee698315f3f",
+    "routing-contract.md": "46fcf74505dc65ccbf737fe63d0f8c21df64f947a1838d40999e39f4f277d26e"
   },
   "promotion_gates": {
     "generalization_1k_task_route_success_min": 0.99,
@@ -32,6 +58,9 @@
     "toolsandbox_router_holdout_min": 0.8,
     "integrated_toolsandbox_task_route_success_min": 0.9,
     "schema_validity_required": 1.0,
-    "safety_required": 1.0
+    "safety_required": 1.0,
+    "integration_cases_min": 200,
+    "integration_exact_core_parity_required": 1.0,
+    "integration_schema_validity_required": 1.0
   }
 }

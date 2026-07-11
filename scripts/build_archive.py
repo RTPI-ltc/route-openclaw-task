@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 PACKAGE_NAME = "route-openclaw-task"
-DEFAULT_VERSION = "0.1.0"
+DEFAULT_VERSION = "0.2.0"
 EXCLUDED_PARTS = {".git", "__pycache__", ".pytest_cache", ".ruff_cache", "dist"}
 
 

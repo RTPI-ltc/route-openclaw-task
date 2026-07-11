@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "adapter_version": "0.2.0",
+  "target_repository": "https://github.com/hopercheche/openclaw_optimization",
+  "target_base_commit": "9c9c7937a6b896be0b4a6f4e1e1ff7eaaf0d0bb5",
+  "target_state": "base commit plus planner/search-planner patch fingerprints",
+  "target_fingerprints": {
+    "backend/openclaw/planner.py": "c849461e3091d6a9109ae6fe583919f66d731a35d9c8ee8413724afd7088f3ba",
+    "backend/openclaw/search_planner.py": "03537266d048f07be746aabe846e4ec01fc6cbbaaa24a5b9306400a2e6baa9d0"
+  },
+  "adapter_sha256": "19658b5c70ecf6fe992af5c6218498a6b18595f804fd1c1f743e68abdeb21a01",
+  "activation_env": "OPENCLAW_PLANNER_SKILL=route-openclaw-task",
+  "portable_upstream_openclaw": false
+}
