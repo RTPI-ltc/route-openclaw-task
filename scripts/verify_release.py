@@ -239,6 +239,8 @@ def _verify_release_manifest(root: Path, errors: list[str]) -> None:
         errors.append("release manifest legacy skill must be route-openclaw-task")
     if migration.get("legacy_repository") != "RTPI-ltc/route-openclaw-task":
         errors.append("release manifest must record the legacy repository name")
+    if migration.get("intermediate_repository") != "RTPI-ltc/task-compass":
+        errors.append("release manifest must record the intermediate repository name")
     if not all(
         migration.get(key) is True
         for key in (
@@ -247,6 +249,7 @@ def _verify_release_manifest(root: Path, errors: list[str]) -> None:
             "safe_native_upgrade_e2e_passed",
             "repository_renamed",
             "legacy_repository_redirect_verified",
+            "intermediate_repository_redirect_verified",
         )
     ):
         errors.append("release manifest has incomplete name-migration evidence")

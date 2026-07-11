@@ -7,8 +7,8 @@
     "name": "RTPI-ltc",
     "url": "https://github.com/RTPI-ltc"
   },
-  "homepage": "https://github.com/RTPI-ltc/task-compass",
-  "repository": "https://github.com/RTPI-ltc/task-compass",
+  "homepage": "https://github.com/RTPI-ltc/Task-Compass-Skill",
+  "repository": "https://github.com/RTPI-ltc/Task-Compass-Skill",
   "license": "MIT",
   "keywords": [
     "agent-routing",

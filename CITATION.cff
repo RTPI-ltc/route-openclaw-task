@@ -5,7 +5,7 @@ type: software
 version: 0.3.0
 date-released: 2026-07-11
 license: MIT
-repository-code: "https://github.com/RTPI-ltc/task-compass"
-url: "https://github.com/RTPI-ltc/task-compass"
+repository-code: "https://github.com/RTPI-ltc/Task-Compass-Skill"
+url: "https://github.com/RTPI-ltc/Task-Compass-Skill"
 authors:
   - name: "Task Compass Skill contributors"

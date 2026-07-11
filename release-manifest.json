@@ -5,7 +5,7 @@
     "route-openclaw-task"
   ],
   "version": "0.3.0",
-  "repository": "https://github.com/RTPI-ltc/task-compass",
+  "repository": "https://github.com/RTPI-ltc/Task-Compass-Skill",
   "runtime_dependencies": [
     "python>=3.10"
   ],
@@ -58,7 +58,9 @@
     "side_by_side_native_upgrade_supported": false,
     "repository_renamed": true,
     "legacy_repository": "RTPI-ltc/route-openclaw-task",
-    "legacy_repository_redirect_verified": true
+    "legacy_repository_redirect_verified": true,
+    "intermediate_repository": "RTPI-ltc/task-compass",
+    "intermediate_repository_redirect_verified": true
   },
   "raw_training_rows_included": false,
   "raw_benchmark_prompts_included": false,

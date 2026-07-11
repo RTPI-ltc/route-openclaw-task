@@ -5,7 +5,7 @@
 Install the Git repository directly:
 
 ```bash
-openclaw skills install git:RTPI-ltc/task-compass@v0.3.0 --as task-compass
+openclaw skills install git:RTPI-ltc/Task-Compass-Skill@v0.3.0 --as task-compass
 ```
 
 OpenClaw discovers `SKILL.md` at the repository root. When the task matches the trigger description, the agent can invoke `scripts/route_task.py`, inspect the validated JSON, and build its plan without changing OpenClaw source code.
@@ -98,7 +98,7 @@ The router itself does not need an API key or network access.
 Pin a release tag:
 
 ```bash
-openclaw skills install git:RTPI-ltc/task-compass@v0.3.0 --as task-compass
+openclaw skills install git:RTPI-ltc/Task-Compass-Skill@v0.3.0 --as task-compass
 ```
 
 For rollback, reinstall the previous tag. Git-installed skills are reinstalled to update; OpenClaw's tracked `skills update` flow applies to ClawHub installs.

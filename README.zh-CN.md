@@ -23,14 +23,14 @@
 ## 安装
 
 ```bash
-openclaw skills install git:RTPI-ltc/task-compass@v0.3.0 --as task-compass
+openclaw skills install git:RTPI-ltc/Task-Compass-Skill@v0.3.0 --as task-compass
 ```
 
 本地安装：
 
 ```bash
-git clone https://github.com/RTPI-ltc/task-compass.git
-openclaw skills install ./task-compass --as task-compass
+git clone https://github.com/RTPI-ltc/Task-Compass-Skill.git
+openclaw skills install ./Task-Compass-Skill --as task-compass
 ```
 
 要求 Python 3.10+，不需要第三方 Python 包、网络或 API key。发布流程会在官方 OpenClaw `2026.6.11` 镜像中，以断网、只读根文件系统方式验证安装、识别和执行。
@@ -97,4 +97,4 @@ python3 scripts/scan_secrets.py --history
 
 项目代码采用 [MIT License](LICENSE)，第三方数据和 benchmark 保留原始许可，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
-旧名称 `route-openclaw-task` 仅作为弃用的 Skill 兼容别名继续可用。GitHub 仓库现已更名为 `RTPI-ltc/task-compass`；旧仓库地址会重定向到新地址。
+旧名称 `route-openclaw-task` 仅作为弃用的 Skill 兼容别名继续可用。GitHub 仓库现已更名为 `RTPI-ltc/Task-Compass-Skill`；旧仓库地址会重定向到新地址。
