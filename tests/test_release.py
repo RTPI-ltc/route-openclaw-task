@@ -107,8 +107,8 @@ class ReleaseTest(unittest.TestCase):
             root = Path(temp_dir) / "source"
             output = Path(temp_dir) / "output"
             root.mkdir()
-            secret = "sk-" + "not-safe.with/slash+padding123456"
-            (root / "config.txt").write_text(f"api_key={secret}\n", encoding="utf-8")
+            sample = "sk-" + "not-safe.with/slash+padding123456"
+            (root / "config.txt").write_text(f"api_key={sample}\n", encoding="utf-8")
             result = subprocess.run(
                 [
                     sys.executable,
@@ -126,7 +126,7 @@ class ReleaseTest(unittest.TestCase):
             )
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("release archive secret scan failed", result.stderr)
-            self.assertNotIn(secret, result.stderr)
+            self.assertNotIn(sample, result.stderr)
 
     def test_release_archive_is_reproducible(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
