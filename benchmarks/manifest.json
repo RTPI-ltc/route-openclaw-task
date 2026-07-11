@@ -1,0 +1,33 @@
+{
+  "release_evidence_version": "1.0",
+  "generated_from": {
+    "toolsandbox_router": "benchmarks/results/071_route_skill_public_model_eval/toolsandbox-258-full.json",
+    "generalization": "benchmarks/results/071_route_skill_public_model_eval/generalization-1k-full.json",
+    "baseline_integrated": "benchmarks/results/070_toolsandbox_unseen/baseline/strict_metrics.json",
+    "optimized_integrated": "benchmarks/results/070_toolsandbox_unseen/optimized/strict_metrics.json"
+  },
+  "sources": {
+    "toolsandbox": {
+      "repository": "https://github.com/apple/ToolSandbox",
+      "commit": "165848b9a78cead7ca7fe7c89c688b58e6501219",
+      "license": "Apple repository license",
+      "tasks": 258,
+      "dev": 212,
+      "holdout": 46
+    },
+    "generalization_suite": {
+      "tasks": 1000,
+      "dev": 800,
+      "holdout": 200,
+      "raw_rows_packaged": false
+    }
+  },
+  "profile_model_sha256": "2af891d851a2ac1a32f7382b1b98b894467c1710a416c2f419f00b3ff74aa6fe",
+  "tool_family_model_sha256": "5f52ab87478b1ea9152029ff90e1150d8337b937493e6e8477617ee698315f3f",
+  "raw_prompts_packaged": false,
+  "files": {
+    "generalization-1k.json": "819ec625a3c1053077a8b0f2a45ad893520a8ff03d92dfbb525c8aaa269fd0ea",
+    "toolsandbox-integrated.json": "80884e254260f4d8bf4f5196f8bdd49194ad0720d56ef65b58f09c8e5572e704",
+    "toolsandbox-router.json": "2eb7203f2f968b5b5f4b98ed2ddea537121ae8c611b8fbef75093bb8687ca35b"
+  }
+}

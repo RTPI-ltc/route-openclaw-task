@@ -1,0 +1,29 @@
+{
+  "source_suite": "benchmarks/tasks/061_safe_generalization_distill_v2_suite.json",
+  "source_suite_sha256": "e49bbf3b1c90b72a779aa90a7dd18d4f0c1ddb11d8f954e8c765e1694448105d",
+  "selection": "license-reviewed source allowlist",
+  "allowed_sources": {
+    "phoneharness": "Apache-2.0",
+    "phoneharness_synthetic": "Apache-2.0",
+    "skillsbench": "Apache-2.0",
+    "tau2": "MIT",
+    "toolbench": "Apache-2.0"
+  },
+  "excluded_sources": [
+    "terminalworld_safe_network"
+  ],
+  "task_count": 689,
+  "source_counts": {
+    "phoneharness": 144,
+    "phoneharness_synthetic": 250,
+    "skillsbench": 11,
+    "tau2": 184,
+    "toolbench": 100
+  },
+  "split_counts": {
+    "dev": 551,
+    "holdout": 138
+  },
+  "tasks_sha256": "70d86b8b896d05842e2f44814b1221a2ec9b1b19d2ca0972db0dfd1ea55baa7d",
+  "raw_training_rows_packaged_in_public_release": false
+}

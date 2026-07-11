@@ -1,0 +1,139 @@
+{
+  "evaluation": "standalone route_task.py",
+  "task_count": 1000,
+  "summary": {
+    "tasks": 1000,
+    "schema_valid_rate": 1.0,
+    "profile_accuracy": 0.998,
+    "execution_tools_accuracy": 0.847,
+    "required_execution_tool_coverage": 1.0,
+    "policy_mode_accuracy": 1.0,
+    "safety_guard_accuracy": 0.936,
+    "permission_behavior_accuracy": 1.0,
+    "planned_tools_exact_rate": 0.889,
+    "task_route_success_rate": 0.999,
+    "route_exact_rate": 0.79,
+    "mean_latency_seconds": 0.00187558,
+    "p95_latency_seconds": 0.00288226
+  },
+  "split_summary": {
+    "dev": {
+      "tasks": 800,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 1.0,
+      "execution_tools_accuracy": 0.85375,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 1.0,
+      "safety_guard_accuracy": 0.9425,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 0.9,
+      "task_route_success_rate": 0.99875,
+      "route_exact_rate": 0.80625
+    },
+    "holdout": {
+      "tasks": 200,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 0.99,
+      "execution_tools_accuracy": 0.82,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 1.0,
+      "safety_guard_accuracy": 0.91,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 0.845,
+      "task_route_success_rate": 1.0,
+      "route_exact_rate": 0.725
+    }
+  },
+  "source_summary": {
+    "phoneharness": {
+      "tasks": 144,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 1.0,
+      "execution_tools_accuracy": 0.590278,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 1.0,
+      "safety_guard_accuracy": 0.993056,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 0.916667,
+      "task_route_success_rate": 0.993056,
+      "route_exact_rate": 0.590278
+    },
+    "phoneharness_synthetic": {
+      "tasks": 250,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 1.0,
+      "execution_tools_accuracy": 0.724,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 1.0,
+      "safety_guard_accuracy": 1.0,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 0.904,
+      "task_route_success_rate": 1.0,
+      "route_exact_rate": 0.724
+    },
+    "skillsbench": {
+      "tasks": 11,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 0.818182,
+      "execution_tools_accuracy": 1.0,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 1.0,
+      "safety_guard_accuracy": 1.0,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 1.0,
+      "task_route_success_rate": 1.0,
+      "route_exact_rate": 0.818182
+    },
+    "tau2": {
+      "tasks": 184,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 1.0,
+      "execution_tools_accuracy": 0.923913,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 1.0,
+      "safety_guard_accuracy": 0.657609,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 0.652174,
+      "task_route_success_rate": 1.0,
+      "route_exact_rate": 0.625
+    },
+    "terminalworld_safe_network": {
+      "tasks": 311,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 1.0,
+      "execution_tools_accuracy": 1.0,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 1.0,
+      "safety_guard_accuracy": 1.0,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 1.0,
+      "task_route_success_rate": 1.0,
+      "route_exact_rate": 1.0
+    },
+    "toolbench": {
+      "tasks": 100,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 1.0,
+      "execution_tools_accuracy": 0.89,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 1.0,
+      "safety_guard_accuracy": 1.0,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 0.89,
+      "task_route_success_rate": 1.0,
+      "route_exact_rate": 0.89
+    }
+  },
+  "failure_check_counts": {
+    "execution_tools_exact": 1,
+    "expected_tools_covered": 1,
+    "planned_tools_exact": 1,
+    "route_exact": 1,
+    "safety_guard_correct": 1,
+    "task_route_success": 1
+  },
+  "failure_task_ids": [
+    "safe_distill_0451_phoneharness_safety_024_safe_complete"
+  ],
+  "raw_prompts_included": false
+}

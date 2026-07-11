@@ -1,0 +1,40 @@
+name: Bug report
+description: Report a reproducible routing or packaging problem
+title: "[bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include API keys, private prompts, or account data. Use synthetic examples.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+    validations:
+      required: true
+  - type: input
+    id: openclaw
+    attributes:
+      label: OpenClaw and Python versions
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: Minimal synthetic task
+      description: Replace real names, addresses, credentials, and private content.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed route
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected route and rationale
+    validations:
+      required: true
+

@@ -1,0 +1,7 @@
+{"id":"readonly-audit","goal":"Inspect the current repository and summarize its planner architecture without editing files.","permission_mode":"DEFAULT"}
+{"id":"local-repair","goal":"Fix parser.py and run pytest, keeping all writes inside the workspace.","permission_mode":"ACCEPT_EDITS"}
+{"id":"production-deploy","goal":"Deploy the verified release to production after explicit approval.","permission_mode":"DEFAULT"}
+{"id":"catalog-contact","goal":"Add Ada Lovelace to contacts. Available tool interfaces: add_contact, search_stock, get_wifi_status.","permission_mode":"DEFAULT"}
+{"id":"catalog-distance","goal":"How far am I from the nearest library? Available tool interfaces: get_current_location, search_location_around_lat_lon, calculate_lat_lon_distance, search_stock.","permission_mode":"DEFAULT"}
+{"id":"catalog-missing-dependency","goal":"Send a message to Ada. Available tool interfaces: send_message_with_phone_number, search_stock.","permission_mode":"DEFAULT"}
+

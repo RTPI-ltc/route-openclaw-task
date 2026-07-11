@@ -1,0 +1,74 @@
+name: OpenClaw Compatibility
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "SKILL.md"
+      - "scripts/**"
+      - "assets/**"
+      - "references/**"
+      - ".github/workflows/openclaw-compat.yml"
+  pull_request:
+    paths:
+      - "SKILL.md"
+      - "scripts/**"
+      - "assets/**"
+      - "references/**"
+      - ".github/workflows/openclaw-compat.yml"
+  schedule:
+    - cron: "29 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENCLAW_IMAGE: ghcr.io/openclaw/openclaw@sha256:3814fb1f62f9cfc5944de088c5817c68c88b5d721feebe36420b666a90a61ce7
+
+jobs:
+  official-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+      - name: Build portable archive
+        run: python scripts/build_archive.py --output-dir dist
+      - name: Prepare clean source and workspace
+        run: |
+          mkdir -p "${RUNNER_TEMP}/route-source" "${RUNNER_TEMP}/openclaw-home"
+          tar -xzf dist/route-openclaw-task-v0.1.0.tar.gz \
+            --strip-components=1 -C "${RUNNER_TEMP}/route-source"
+          chmod -R a+rX "${RUNNER_TEMP}/route-source"
+          chmod 777 "${RUNNER_TEMP}/openclaw-home"
+      - name: Install with the official OpenClaw CLI
+        run: |
+          docker run --rm --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            -v "${RUNNER_TEMP}/openclaw-home:/home/node:rw" \
+            -v "${RUNNER_TEMP}/route-source:/source:ro" \
+            "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
+            skills install /source --as route-openclaw-task
+      - name: Check eligibility
+        run: |
+          docker run --rm --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            -v "${RUNNER_TEMP}/openclaw-home:/home/node:rw" \
+            "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
+            skills info route-openclaw-task --json > "${RUNNER_TEMP}/skill-info.json"
+          python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/skill-info.json")); assert p["eligible"] and not p["missing"]["bins"]'
+      - name: Execute the installed router offline
+        run: |
+          docker run --rm --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            -v "${RUNNER_TEMP}/openclaw-home:/home/node:rw" \
+            -w /home/node/.openclaw/workspace/skills/route-openclaw-task \
+            "${OPENCLAW_IMAGE}" python3 scripts/route_task.py \
+            --goal "Read-only: inspect the repository planner architecture." \
+            > "${RUNNER_TEMP}/route.json"
+          python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/route.json")); assert p["schema_version"]=="1.0" and p["planner_profile"]=="terminal_cli_workflow" and not p["execution_tools"]'

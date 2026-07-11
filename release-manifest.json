@@ -1,0 +1,37 @@
+{
+  "name": "route-openclaw-task",
+  "version": "0.1.0",
+  "repository": "https://github.com/RTPI-ltc/route-openclaw-task",
+  "runtime_dependencies": [
+    "python>=3.10"
+  ],
+  "third_party_python_dependencies": [],
+  "network_required": false,
+  "api_key_required": false,
+  "compatibility_validation": {
+    "openclaw_version": "2026.6.11",
+    "image": "ghcr.io/openclaw/openclaw",
+    "image_digest": "sha256:3814fb1f62f9cfc5944de088c5817c68c88b5d721feebe36420b666a90a61ce7",
+    "network_disabled": true,
+    "read_only_root": true,
+    "skill_eligible": true,
+    "offline_route_executed": true
+  },
+  "raw_training_rows_included": false,
+  "raw_benchmark_prompts_included": false,
+  "source_hashes": {
+    "SKILL.md": "2f5a7f971508bc948b22c6901448d04ec5725b559b2b1d0710478dd7a2c5563a",
+    "route_task.py": "2f2cdbd437acb2be24eaa69a9f7bf9970f1330033760a97ddb02459a32866bcb",
+    "profile-policy-model.json": "2af891d851a2ac1a32f7382b1b98b894467c1710a416c2f419f00b3ff74aa6fe",
+    "tool-family-model.json": "5f52ab87478b1ea9152029ff90e1150d8337b937493e6e8477617ee698315f3f"
+  },
+  "promotion_gates": {
+    "generalization_1k_task_route_success_min": 0.99,
+    "generalization_1k_holdout_min": 0.99,
+    "toolsandbox_router_task_route_success_min": 0.9,
+    "toolsandbox_router_holdout_min": 0.8,
+    "integrated_toolsandbox_task_route_success_min": 0.9,
+    "schema_validity_required": 1.0,
+    "safety_required": 1.0
+  }
+}

@@ -1,0 +1,25 @@
+name: Feature request
+description: Propose a reusable routing capability
+title: "[feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Repeated task scenario
+      description: Explain why this is a recurring workflow rather than one benchmark item.
+    validations:
+      required: true
+  - type: textarea
+    id: contract
+    attributes:
+      label: Proposed input and output behavior
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Positive, negative, safety, and holdout validation
+    validations:
+      required: true
+

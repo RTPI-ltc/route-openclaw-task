@@ -1,0 +1,642 @@
+{
+  "evaluation": "OpenClaw LocalAuditPlanner + Qwen3.7-Max",
+  "task_count": 258,
+  "baseline": {
+    "summary": {
+      "tasks": 258,
+      "route_success_rate": 0.267442,
+      "executor_coverage_rate": 0.364341,
+      "executor_precision_rate": 0.655039,
+      "path_exact_rate": 0.0,
+      "qwen_success_rate": 1.0,
+      "safety_rate": 1.0,
+      "mean_selected_steps": 5.0,
+      "mean_latency_seconds": 34.26854,
+      "p95_latency_seconds": 51.5187
+    },
+    "split_summary": {
+      "dev": {
+        "tasks": 212,
+        "route_success_rate": 0.259434,
+        "executor_coverage_rate": 0.358491,
+        "executor_precision_rate": 0.674528,
+        "path_exact_rate": 0.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 5.0,
+        "mean_latency_seconds": 34.055468,
+        "p95_latency_seconds": 51.4843
+      },
+      "holdout": {
+        "tasks": 46,
+        "route_success_rate": 0.304348,
+        "executor_coverage_rate": 0.391304,
+        "executor_precision_rate": 0.565217,
+        "path_exact_rate": 0.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 5.0,
+        "mean_latency_seconds": 35.250522,
+        "p95_latency_seconds": 50.4584
+      }
+    },
+    "category_summary": {
+      "insufficient_information": {
+        "tasks": 56,
+        "route_success_rate": 0.571429,
+        "executor_coverage_rate": 1.0,
+        "executor_precision_rate": 0.571429,
+        "path_exact_rate": 0.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 5.0,
+        "mean_latency_seconds": 35.275663,
+        "p95_latency_seconds": 47.0439
+      },
+      "multiple_tool_call": {
+        "tasks": 108,
+        "route_success_rate": 0.222222,
+        "executor_coverage_rate": 0.231481,
+        "executor_precision_rate": 0.712963,
+        "path_exact_rate": 0.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 5.0,
+        "mean_latency_seconds": 34.678097,
+        "p95_latency_seconds": 49.656
+      },
+      "multiple_user_turn": {
+        "tasks": 56,
+        "route_success_rate": 0.142857,
+        "executor_coverage_rate": 0.142857,
+        "executor_precision_rate": 0.660714,
+        "path_exact_rate": 0.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 5.0,
+        "mean_latency_seconds": 37.101691,
+        "p95_latency_seconds": 54.0625
+      },
+      "single_tool_call": {
+        "tasks": 38,
+        "route_success_rate": 0.131579,
+        "executor_coverage_rate": 0.131579,
+        "executor_precision_rate": 0.605263,
+        "path_exact_rate": 0.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 5.0,
+        "mean_latency_seconds": 27.445182,
+        "p95_latency_seconds": 42.7005
+      }
+    },
+    "variant_summary": {
+      "no_distraction_tools": {
+        "tasks": 129,
+        "route_success_rate": 0.286822,
+        "executor_coverage_rate": 0.356589,
+        "executor_precision_rate": 0.744186,
+        "path_exact_rate": 0.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 5.0,
+        "mean_latency_seconds": 34.608707,
+        "p95_latency_seconds": 48.894
+      },
+      "three_distraction_tools": {
+        "tasks": 129,
+        "route_success_rate": 0.248062,
+        "executor_coverage_rate": 0.372093,
+        "executor_precision_rate": 0.565891,
+        "path_exact_rate": 0.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 5.0,
+        "mean_latency_seconds": 33.928372,
+        "p95_latency_seconds": 53.1934
+      }
+    },
+    "failure_counts": {
+      "missing_expected_executor": 164,
+      "missing_expected_planner_role": 170,
+      "permission_behavior_mismatch": 164,
+      "unexpected_executor": 89
+    },
+    "failure_task_ids": [
+      "toolsandbox_insufficient_information_find_current_city_low_battery_mode_insufficient_information_no_distraction_tools",
+      "toolsandbox_insufficient_information_find_current_city_low_battery_mode_insufficient_information_three_distraction_tools",
+      "toolsandbox_insufficient_information_find_current_location_low_battery_mode_insufficient_information_no_distraction_tools",
+      "toolsandbox_insufficient_information_find_current_location_low_battery_mode_insufficient_information_three_distraction_tools",
+      "toolsandbox_insufficient_information_find_distance_with_location_name_insufficient_information_alt_three_distraction_tools",
+      "toolsandbox_insufficient_information_find_temperature_f_with_location_insufficient_information_three_distraction_tools",
+      "toolsandbox_insufficient_information_modify_contact_with_message_recency_insufficient_information_alt_three_distraction_tools",
+      "toolsandbox_insufficient_information_modify_contact_with_message_recency_insufficient_information_no_distraction_tools",
+      "toolsandbox_insufficient_information_modify_contact_with_message_recency_insufficient_information_three_distraction_tools",
+      "toolsandbox_insufficient_information_modify_reminder_with_recency_latest_insufficient_information_three_distraction_tools",
+      "toolsandbox_insufficient_information_remove_contact_by_phone_no_remove_contact_insufficient_information_alt_three_distraction_tools",
+      "toolsandbox_insufficient_information_remove_contact_by_phone_no_remove_contact_insufficient_information_no_distraction_tools",
+      "toolsandbox_insufficient_information_remove_contact_by_phone_no_remove_contact_insufficient_information_three_distraction_tools",
+      "toolsandbox_insufficient_information_remove_contact_by_phone_no_search_contacts_insufficient_information_alt_no_distraction_tools",
+      "toolsandbox_insufficient_information_remove_contact_by_phone_no_search_contacts_insufficient_information_alt_three_distraction_tools",
+      "toolsandbox_insufficient_information_remove_contact_by_phone_no_search_contacts_insufficient_information_no_distraction_tools",
+      "toolsandbox_insufficient_information_remove_contact_by_phone_no_search_contacts_insufficient_information_three_distraction_tools",
+      "toolsandbox_insufficient_information_remove_reminder_with_recency_latest_insufficient_information_no_distraction_tools",
+      "toolsandbox_insufficient_information_remove_reminder_with_recency_latest_insufficient_information_three_distraction_tools",
+      "toolsandbox_insufficient_information_search_reminder_with_recency_upcoming_insufficient_information_three_distraction_tools",
+      "toolsandbox_insufficient_information_send_message_with_contact_content_cellular_off_insufficient_information_alt_no_distraction_tools",
+      "toolsandbox_insufficient_information_send_message_with_contact_content_cellular_off_insufficient_information_alt_three_distraction_tools",
+      "toolsandbox_insufficient_information_send_message_with_contact_content_cellular_off_insufficient_information_no_distraction_tools",
+      "toolsandbox_insufficient_information_send_message_with_contact_content_cellular_off_insufficient_information_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_date_and_time_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_date_and_time_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_date_and_time_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_date_and_time_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_week_delta_and_time_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_week_delta_and_time_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_week_delta_and_time_and_location_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_week_delta_and_time_and_location_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_week_delta_and_time_and_location_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_week_delta_and_time_and_location_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_week_delta_and_time_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_week_delta_and_time_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_weekday_delta_and_time_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_weekday_delta_and_time_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_weekday_delta_and_time_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_add_reminder_content_and_weekday_delta_and_time_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_days_till_holiday_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_days_till_holiday_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_days_till_holiday_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_days_till_holiday_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_distance_with_location_name_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_distance_with_location_name_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_distance_with_location_name_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_distance_with_location_name_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_stock_symbol_with_company_name_low_battery_mode_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_temperature_f_with_location_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_temperature_f_with_location_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_find_temperature_f_with_location_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_modify_contact_with_message_recency_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_modify_contact_with_message_recency_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_modify_contact_with_message_recency_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_modify_contact_with_message_recency_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_modify_reminder_with_recency_latest_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_modify_reminder_with_recency_latest_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_modify_reminder_with_recency_latest_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_modify_reminder_with_recency_latest_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_contact_by_phone_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_contact_by_phone_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_contact_by_phone_ambiguous_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_contact_by_phone_ambiguous_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_contact_by_phone_ambiguous_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_contact_by_phone_ambiguous_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_contact_by_phone_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_contact_by_phone_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_reminder_with_recency_latest_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_reminder_with_recency_latest_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_reminder_with_recency_latest_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_remove_reminder_with_recency_latest_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_latest_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_latest_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_latest_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_latest_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_oldest_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_oldest_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_oldest_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_oldest_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_creation_recency_yesterday_implicit_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_creation_recency_yesterday_implicit_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_creation_recency_yesterday_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_creation_recency_yesterday_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_upcoming_implicit_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_upcoming_implicit_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_upcoming_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_upcoming_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_yesterday_implicit_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_yesterday_implicit_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_yesterday_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_yesterday_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_send_message_with_contact_content_cellular_off_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_send_message_with_contact_content_cellular_off_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_send_message_with_contact_content_cellular_off_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_send_message_with_contact_content_cellular_off_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_turn_on_cellular_low_battery_mode_implicit_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_turn_on_cellular_low_battery_mode_implicit_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_turn_on_cellular_low_battery_mode_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_turn_on_cellular_low_battery_mode_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_turn_on_location_low_battery_mode_implicit_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_turn_on_location_low_battery_mode_implicit_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_turn_on_location_low_battery_mode_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_turn_on_location_low_battery_mode_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_update_contact_relationship_with_relationship_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_update_contact_relationship_with_relationship_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_update_contact_relationship_with_relationship_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_update_contact_relationship_with_relationship_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_date_and_time_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_date_and_time_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_date_and_time_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_date_and_time_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_and_location_low_battery_mode_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_and_location_low_battery_mode_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_and_location_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_and_location_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_and_location_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_and_location_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_week_delta_and_time_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_weekday_delta_and_time_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_weekday_delta_and_time_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_weekday_delta_and_time_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_add_reminder_content_and_weekday_delta_and_time_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_find_days_till_holiday_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_find_days_till_holiday_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_find_distance_with_location_name_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_find_distance_with_location_name_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_find_temperature_f_with_location_and_time_diff_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_find_temperature_f_with_location_and_time_diff_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_modify_contact_with_message_recency_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_modify_contact_with_message_recency_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_modify_contact_with_message_recency_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_modify_contact_with_message_recency_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_remove_contact_by_phone_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_remove_contact_by_phone_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_remove_contact_by_phone_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_remove_contact_by_phone_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_latest_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_latest_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_latest_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_latest_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_oldest_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_oldest_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_oldest_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_oldest_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_send_message_with_contact_content_cellular_off_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_send_message_with_contact_content_cellular_off_multiple_user_turn_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_send_message_with_contact_content_cellular_off_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_send_message_with_contact_content_cellular_off_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_update_contact_relationship_with_relationship_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_update_contact_relationship_with_relationship_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_update_contact_relationship_with_relationship_twice_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_update_contact_relationship_with_relationship_twice_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_single_tool_call_add_contact_with_name_and_phone_number_no_distraction_tools",
+      "toolsandbox_single_tool_call_add_contact_with_name_and_phone_number_three_distraction_tools",
+      "toolsandbox_single_tool_call_cellular_off_no_distraction_tools",
+      "toolsandbox_single_tool_call_cellular_off_three_distraction_tools",
+      "toolsandbox_single_tool_call_convert_currency_canonicalize_no_distraction_tools",
+      "toolsandbox_single_tool_call_convert_currency_canonicalize_three_distraction_tools",
+      "toolsandbox_single_tool_call_convert_currency_no_distraction_tools",
+      "toolsandbox_single_tool_call_convert_currency_three_distraction_tools",
+      "toolsandbox_single_tool_call_find_address_with_lat_lon_no_distraction_tools",
+      "toolsandbox_single_tool_call_find_address_with_lat_lon_three_distraction_tools",
+      "toolsandbox_single_tool_call_find_phone_number_with_location_name_no_distraction_tools",
+      "toolsandbox_single_tool_call_find_phone_number_with_location_name_three_distraction_tools",
+      "toolsandbox_single_tool_call_find_stock_symbol_with_company_name_no_distraction_tools",
+      "toolsandbox_single_tool_call_find_stock_symbol_with_company_name_three_distraction_tools",
+      "toolsandbox_single_tool_call_find_temperature_no_distraction_tools",
+      "toolsandbox_single_tool_call_find_temperature_three_distraction_tools",
+      "toolsandbox_single_tool_call_find_thanksgiving_timestamp_no_distraction_tools",
+      "toolsandbox_single_tool_call_get_cellular_no_distraction_tools",
+      "toolsandbox_single_tool_call_get_cellular_three_distraction_tools",
+      "toolsandbox_single_tool_call_remove_contact_with_id_no_distraction_tools",
+      "toolsandbox_single_tool_call_remove_contact_with_id_three_distraction_tools",
+      "toolsandbox_single_tool_call_search_name_with_relationship_no_distraction_tools",
+      "toolsandbox_single_tool_call_search_name_with_relationship_three_distraction_tools",
+      "toolsandbox_single_tool_call_search_phone_number_with_name_no_distraction_tools",
+      "toolsandbox_single_tool_call_search_phone_number_with_name_three_distraction_tools",
+      "toolsandbox_single_tool_call_search_relationship_with_phone_number_no_distraction_tools",
+      "toolsandbox_single_tool_call_search_relationship_with_phone_number_three_distraction_tools",
+      "toolsandbox_single_tool_call_search_sender_phone_number_with_content_no_distraction_tools",
+      "toolsandbox_single_tool_call_search_sender_phone_number_with_content_three_distraction_tools",
+      "toolsandbox_single_tool_call_send_message_with_phone_number_and_content_no_distraction_tools",
+      "toolsandbox_single_tool_call_send_message_with_phone_number_and_content_three_distraction_tools",
+      "toolsandbox_single_tool_call_update_contact_with_id_and_phone_number_no_distraction_tools",
+      "toolsandbox_single_tool_call_update_contact_with_id_and_phone_number_three_distraction_tools"
+    ]
+  },
+  "optimized": {
+    "summary": {
+      "tasks": 258,
+      "route_success_rate": 0.930233,
+      "executor_coverage_rate": 0.98062,
+      "executor_precision_rate": 1.0,
+      "path_exact_rate": 0.98062,
+      "qwen_success_rate": 1.0,
+      "safety_rate": 1.0,
+      "mean_selected_steps": 4.325581,
+      "mean_latency_seconds": 34.530598,
+      "p95_latency_seconds": 50.2772
+    },
+    "split_summary": {
+      "dev": {
+        "tasks": 212,
+        "route_success_rate": 0.948113,
+        "executor_coverage_rate": 1.0,
+        "executor_precision_rate": 1.0,
+        "path_exact_rate": 1.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 4.349057,
+        "mean_latency_seconds": 34.483476,
+        "p95_latency_seconds": 49.217
+      },
+      "holdout": {
+        "tasks": 46,
+        "route_success_rate": 0.847826,
+        "executor_coverage_rate": 0.891304,
+        "executor_precision_rate": 1.0,
+        "path_exact_rate": 0.891304,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 4.217391,
+        "mean_latency_seconds": 34.74777,
+        "p95_latency_seconds": 48.1253
+      }
+    },
+    "category_summary": {
+      "insufficient_information": {
+        "tasks": 56,
+        "route_success_rate": 1.0,
+        "executor_coverage_rate": 1.0,
+        "executor_precision_rate": 1.0,
+        "path_exact_rate": 1.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 4.0,
+        "mean_latency_seconds": 33.484173,
+        "p95_latency_seconds": 45.9373
+      },
+      "multiple_tool_call": {
+        "tasks": 108,
+        "route_success_rate": 0.898148,
+        "executor_coverage_rate": 0.972222,
+        "executor_precision_rate": 1.0,
+        "path_exact_rate": 0.972222,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 4.462963,
+        "mean_latency_seconds": 34.824373,
+        "p95_latency_seconds": 48.1253
+      },
+      "multiple_user_turn": {
+        "tasks": 56,
+        "route_success_rate": 0.928571,
+        "executor_coverage_rate": 1.0,
+        "executor_precision_rate": 1.0,
+        "path_exact_rate": 1.0,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 4.607143,
+        "mean_latency_seconds": 38.133504,
+        "p95_latency_seconds": 53.5096
+      },
+      "single_tool_call": {
+        "tasks": 38,
+        "route_success_rate": 0.921053,
+        "executor_coverage_rate": 0.947368,
+        "executor_precision_rate": 1.0,
+        "path_exact_rate": 0.947368,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 4.0,
+        "mean_latency_seconds": 29.928213,
+        "p95_latency_seconds": 39.6991
+      }
+    },
+    "variant_summary": {
+      "no_distraction_tools": {
+        "tasks": 129,
+        "route_success_rate": 0.922481,
+        "executor_coverage_rate": 0.984496,
+        "executor_precision_rate": 1.0,
+        "path_exact_rate": 0.984496,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 4.325581,
+        "mean_latency_seconds": 34.527205,
+        "p95_latency_seconds": 46.9846
+      },
+      "three_distraction_tools": {
+        "tasks": 129,
+        "route_success_rate": 0.937984,
+        "executor_coverage_rate": 0.976744,
+        "executor_precision_rate": 1.0,
+        "path_exact_rate": 0.976744,
+        "qwen_success_rate": 1.0,
+        "safety_rate": 1.0,
+        "mean_selected_steps": 4.325581,
+        "mean_latency_seconds": 34.533991,
+        "p95_latency_seconds": 50.5781
+      }
+    },
+    "failure_counts": {
+      "missing_expected_executor": 5,
+      "missing_expected_planner_role": 5,
+      "permission_behavior_mismatch": 18
+    },
+    "failure_task_ids": [
+      "toolsandbox_multiple_tool_call_remove_contact_by_phone_ambiguous_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_latest_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_oldest_alt_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_message_with_recency_oldest_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_creation_recency_yesterday_implicit_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_creation_recency_yesterday_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_upcoming_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_yesterday_implicit_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_search_reminder_with_recency_yesterday_implicit_three_distraction_tools",
+      "toolsandbox_multiple_tool_call_send_message_with_contact_content_cellular_off_alt_no_distraction_tools",
+      "toolsandbox_multiple_tool_call_send_message_with_contact_content_cellular_off_alt_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_latest_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_latest_multiple_user_turn_no_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_latest_multiple_user_turn_three_distraction_tools",
+      "toolsandbox_multiple_user_turn_search_message_with_recency_oldest_multiple_user_turn_alt_no_distraction_tools",
+      "toolsandbox_single_tool_call_find_phone_number_with_location_name_no_distraction_tools",
+      "toolsandbox_single_tool_call_search_phone_number_with_name_three_distraction_tools",
+      "toolsandbox_single_tool_call_search_relationship_with_phone_number_three_distraction_tools"
+    ]
+  },
+  "comparison": {
+    "summary": {
+      "tasks": 258,
+      "route_success_rate": {
+        "baseline": 0.267442,
+        "optimized": 0.930233,
+        "delta": 0.662791,
+        "ratio": 3.478261
+      },
+      "executor_coverage_rate": {
+        "baseline": 0.364341,
+        "optimized": 0.98062,
+        "delta": 0.616279,
+        "ratio": 2.69149
+      },
+      "executor_precision_rate": {
+        "baseline": 0.655039,
+        "optimized": 1.0,
+        "delta": 0.344961,
+        "ratio": 1.526627
+      },
+      "path_exact_rate": {
+        "baseline": 0.0,
+        "optimized": 0.98062,
+        "delta": 0.98062
+      },
+      "qwen_success_rate": {
+        "baseline": 1.0,
+        "optimized": 1.0,
+        "delta": 0.0,
+        "ratio": 1.0
+      },
+      "safety_rate": {
+        "baseline": 1.0,
+        "optimized": 1.0,
+        "delta": 0.0,
+        "ratio": 1.0
+      },
+      "mean_selected_steps": {
+        "baseline": 5.0,
+        "optimized": 4.325581,
+        "delta": -0.674419,
+        "ratio": 0.865116
+      },
+      "mean_latency_seconds": {
+        "baseline": 34.26854,
+        "optimized": 34.530598,
+        "delta": 0.262058,
+        "ratio": 1.007647
+      },
+      "p95_latency_seconds": {
+        "baseline": 51.5187,
+        "optimized": 50.2772,
+        "delta": -1.2415,
+        "ratio": 0.975902
+      }
+    },
+    "split_summary": {
+      "dev": {
+        "tasks": 212,
+        "route_success_rate": {
+          "baseline": 0.259434,
+          "optimized": 0.948113,
+          "delta": 0.688679,
+          "ratio": 3.654544
+        },
+        "executor_coverage_rate": {
+          "baseline": 0.358491,
+          "optimized": 1.0,
+          "delta": 0.641509,
+          "ratio": 2.78947
+        },
+        "executor_precision_rate": {
+          "baseline": 0.674528,
+          "optimized": 1.0,
+          "delta": 0.325472,
+          "ratio": 1.482518
+        },
+        "path_exact_rate": {
+          "baseline": 0.0,
+          "optimized": 1.0,
+          "delta": 1.0
+        },
+        "qwen_success_rate": {
+          "baseline": 1.0,
+          "optimized": 1.0,
+          "delta": 0.0,
+          "ratio": 1.0
+        },
+        "safety_rate": {
+          "baseline": 1.0,
+          "optimized": 1.0,
+          "delta": 0.0,
+          "ratio": 1.0
+        },
+        "mean_selected_steps": {
+          "baseline": 5.0,
+          "optimized": 4.349057,
+          "delta": -0.650943,
+          "ratio": 0.869811
+        },
+        "mean_latency_seconds": {
+          "baseline": 34.055468,
+          "optimized": 34.483476,
+          "delta": 0.428008,
+          "ratio": 1.012568
+        },
+        "p95_latency_seconds": {
+          "baseline": 51.4843,
+          "optimized": 49.217,
+          "delta": -2.2673,
+          "ratio": 0.955961
+        }
+      },
+      "holdout": {
+        "tasks": 46,
+        "route_success_rate": {
+          "baseline": 0.304348,
+          "optimized": 0.847826,
+          "delta": 0.543478,
+          "ratio": 2.785712
+        },
+        "executor_coverage_rate": {
+          "baseline": 0.391304,
+          "optimized": 0.891304,
+          "delta": 0.5,
+          "ratio": 2.277779
+        },
+        "executor_precision_rate": {
+          "baseline": 0.565217,
+          "optimized": 1.0,
+          "delta": 0.434783,
+          "ratio": 1.769232
+        },
+        "path_exact_rate": {
+          "baseline": 0.0,
+          "optimized": 0.891304,
+          "delta": 0.891304
+        },
+        "qwen_success_rate": {
+          "baseline": 1.0,
+          "optimized": 1.0,
+          "delta": 0.0,
+          "ratio": 1.0
+        },
+        "safety_rate": {
+          "baseline": 1.0,
+          "optimized": 1.0,
+          "delta": 0.0,
+          "ratio": 1.0
+        },
+        "mean_selected_steps": {
+          "baseline": 5.0,
+          "optimized": 4.217391,
+          "delta": -0.782609,
+          "ratio": 0.843478
+        },
+        "mean_latency_seconds": {
+          "baseline": 35.250522,
+          "optimized": 34.74777,
+          "delta": -0.502752,
+          "ratio": 0.985738
+        },
+        "p95_latency_seconds": {
+          "baseline": 50.4584,
+          "optimized": 48.1253,
+          "delta": -2.3331,
+          "ratio": 0.953762
+        }
+      }
+    },
+    "promotion": {
+      "route_quality_gate_80pct": true,
+      "latency_non_regression_1_25x": true,
+      "historical_latency_target_70pct": false
+    }
+  },
+  "retry_policy": {
+    "primary_model_fallbacks": 5,
+    "frozen_task_retries": 5,
+    "successful_retries": 5,
+    "strict_override_count": 5
+  },
+  "raw_prompts_included": false
+}

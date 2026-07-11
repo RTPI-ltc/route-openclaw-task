@@ -1,0 +1,90 @@
+{
+  "evaluation": "standalone route_task.py",
+  "task_count": 258,
+  "summary": {
+    "tasks": 258,
+    "schema_valid_rate": 1.0,
+    "profile_accuracy": 0.0,
+    "execution_tools_accuracy": 0.236434,
+    "required_execution_tool_coverage": 1.0,
+    "policy_mode_accuracy": 0.189922,
+    "safety_guard_accuracy": 1.0,
+    "permission_behavior_accuracy": 1.0,
+    "planned_tools_exact_rate": 0.763566,
+    "task_route_success_rate": 0.934109,
+    "route_exact_rate": 0.0,
+    "mean_latency_seconds": 0.0012977,
+    "p95_latency_seconds": 0.00146908
+  },
+  "split_summary": {
+    "dev": {
+      "tasks": 212,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 0.0,
+      "execution_tools_accuracy": 0.235849,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 0.188679,
+      "safety_guard_accuracy": 1.0,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 0.764151,
+      "task_route_success_rate": 0.95283,
+      "route_exact_rate": 0.0
+    },
+    "holdout": {
+      "tasks": 46,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 0.0,
+      "execution_tools_accuracy": 0.23913,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 0.195652,
+      "safety_guard_accuracy": 1.0,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 0.76087,
+      "task_route_success_rate": 0.847826,
+      "route_exact_rate": 0.0
+    }
+  },
+  "source_summary": {
+    "unknown": {
+      "tasks": 258,
+      "schema_valid_rate": 1.0,
+      "profile_accuracy": 0.0,
+      "execution_tools_accuracy": 0.236434,
+      "required_execution_tool_coverage": 1.0,
+      "policy_mode_accuracy": 0.189922,
+      "safety_guard_accuracy": 1.0,
+      "permission_behavior_accuracy": 1.0,
+      "planned_tools_exact_rate": 0.763566,
+      "task_route_success_rate": 0.934109,
+      "route_exact_rate": 0.0
+    }
+  },
+  "failure_check_counts": {
+    "expected_tools_covered": 17,
+    "planned_tools_exact": 17,
+    "policy_mode_correct": 12,
+    "profile_correct": 17,
+    "route_exact": 17,
+    "task_route_success": 17
+  },
+  "failure_task_ids": [
+    "toolsandbox_insufficient_information_modify_contact_with_message_recency_insufficient_information_no_distraction_tools",
+    "toolsandbox_insufficient_information_modify_contact_with_message_recency_insufficient_information_three_distraction_tools",
+    "toolsandbox_insufficient_information_remove_contact_by_phone_no_remove_contact_insufficient_information_no_distraction_tools",
+    "toolsandbox_insufficient_information_remove_contact_by_phone_no_remove_contact_insufficient_information_three_distraction_tools",
+    "toolsandbox_insufficient_information_remove_contact_by_phone_no_search_contacts_insufficient_information_no_distraction_tools",
+    "toolsandbox_insufficient_information_remove_contact_by_phone_no_search_contacts_insufficient_information_three_distraction_tools",
+    "toolsandbox_insufficient_information_remove_reminder_with_recency_latest_insufficient_information_no_distraction_tools",
+    "toolsandbox_insufficient_information_remove_reminder_with_recency_latest_insufficient_information_three_distraction_tools",
+    "toolsandbox_insufficient_information_search_reminder_with_creation_recency_yesterday_insufficient_information_no_distraction_tools",
+    "toolsandbox_insufficient_information_search_reminder_with_creation_recency_yesterday_insufficient_information_three_distraction_tools",
+    "toolsandbox_insufficient_information_send_message_with_contact_content_cellular_off_insufficient_information_no_distraction_tools",
+    "toolsandbox_insufficient_information_send_message_with_contact_content_cellular_off_insufficient_information_three_distraction_tools",
+    "toolsandbox_multiple_tool_call_remove_contact_by_phone_ambiguous_alt_three_distraction_tools",
+    "toolsandbox_multiple_tool_call_send_message_with_contact_content_cellular_off_alt_no_distraction_tools",
+    "toolsandbox_multiple_tool_call_send_message_with_contact_content_cellular_off_alt_three_distraction_tools",
+    "toolsandbox_single_tool_call_find_phone_number_with_location_name_no_distraction_tools",
+    "toolsandbox_single_tool_call_search_phone_number_with_name_three_distraction_tools"
+  ],
+  "raw_prompts_included": false
+}
