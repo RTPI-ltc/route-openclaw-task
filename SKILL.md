@@ -2,7 +2,7 @@
 name: task-compass
 description: Classify agent tasks into a planner profile, execution tools, safety policy, model tier, context policy, and next action. Use when deciding how a task should be planned or delegated, selecting CLI, file, mobile GUI, mobile CLI, MCP, or deployment executors, determining whether to continue, replan, refuse, or await human approval, or evaluating routing behavior across benchmark tasks.
 license: MIT
-metadata: {"version":"0.3.0","aliases":["route-openclaw-task"],"compatibility":"OpenClaw, Codex, or Claude Code with Python 3.10 or newer; no network access or API key required","openclaw":{"requires":{"bins":["python3"]}}}
+metadata: {"version":"0.3.0","aliases":["route-openclaw-task"],"repository_names":["Task-Compass-Skill"],"compatibility":"OpenClaw, Codex, or Claude Code with Python 3.10 or newer; no network access or API key required","openclaw":{"requires":{"bins":["python3"]}}}
 ---
 
 # Task Compass Skill

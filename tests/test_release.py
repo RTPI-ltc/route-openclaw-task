@@ -50,6 +50,21 @@ class ReleaseTest(unittest.TestCase):
             errors = validate(root)
             self.assertTrue(any("multiline YAML" in error for error in errors))
 
+    def test_validator_accepts_declared_repository_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir) / "Task-Compass-Skill"
+            root.mkdir()
+            (root / "SKILL.md").write_text(
+                "---\n"
+                "name: task-compass\n"
+                "description: Test routing skill.\n"
+                "license: MIT\n"
+                'metadata: {"repository_names":["Task-Compass-Skill"],"openclaw":{"requires":{"bins":["python3"]}}}\n'
+                "---\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(validate(root), [])
+
     def test_release_archive_has_portable_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             command = [

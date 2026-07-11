@@ -65,7 +65,7 @@
   "raw_training_rows_included": false,
   "raw_benchmark_prompts_included": false,
   "source_hashes": {
-    "SKILL.md": "90e9dad17b4a043fadc387ec1fdf9fa5f490096d810b306a9609a4521e2dc08a",
+    "SKILL.md": "ad7cbfdb8ea3771bdfd2c643207e782dcfef603997ba548f6440108a885f2108",
     "route_task.py": "2f2cdbd437acb2be24eaa69a9f7bf9970f1330033760a97ddb02459a32866bcb",
     "profile-policy-model.json": "2af891d851a2ac1a32f7382b1b98b894467c1710a416c2f419f00b3ff74aa6fe",
     "tool-family-model.json": "5f52ab87478b1ea9152029ff90e1150d8337b937493e6e8477617ee698315f3f",

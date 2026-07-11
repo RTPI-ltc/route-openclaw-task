@@ -36,8 +36,13 @@ def validate(root: Path) -> list[str]:
     if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name):
         errors.append("name must be a lowercase hyphen-separated slug")
     metadata = frontmatter.get("metadata")
-    aliases = metadata.get("aliases", []) if isinstance(metadata, dict) else []
-    if root.name != name and root.name not in aliases:
+    allowed_directory_names = {name}
+    if isinstance(metadata, dict):
+        for key in ("aliases", "repository_names"):
+            values = metadata.get(key, [])
+            if isinstance(values, list):
+                allowed_directory_names.update(value for value in values if isinstance(value, str))
+    if root.name not in allowed_directory_names:
         errors.append(f"skill name {name!r} must match parent directory {root.name!r}")
     if not description or len(description) > 1024:
         errors.append("description must contain 1-1024 characters")
