@@ -2,9 +2,9 @@
 
 Deterministic, auditable planning and safety routing for agent tasks.
 
-[![CI](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/ci.yml/badge.svg)](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/ci.yml)
-[![OpenClaw](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/openclaw-compat.yml/badge.svg)](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/openclaw-compat.yml)
-[![CodeQL](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/codeql.yml/badge.svg)](https://github.com/RTPI-ltc/route-openclaw-task/actions/workflows/codeql.yml)
+[![CI](https://github.com/RTPI-ltc/task-compass/actions/workflows/ci.yml/badge.svg)](https://github.com/RTPI-ltc/task-compass/actions/workflows/ci.yml)
+[![OpenClaw](https://github.com/RTPI-ltc/task-compass/actions/workflows/openclaw-compat.yml/badge.svg)](https://github.com/RTPI-ltc/task-compass/actions/workflows/openclaw-compat.yml)
+[![CodeQL](https://github.com/RTPI-ltc/task-compass/actions/workflows/codeql.yml/badge.svg)](https://github.com/RTPI-ltc/task-compass/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://www.python.org/)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-111827.svg)](https://agentskills.io/)
@@ -50,7 +50,7 @@ The same model, image, planner policy, and security controls were used on both s
 ### From GitHub
 
 ```bash
-openclaw skills install git:RTPI-ltc/route-openclaw-task@v0.3.0 --as task-compass
+openclaw skills install git:RTPI-ltc/task-compass@v0.3.0 --as task-compass
 ```
 
 OpenClaw installs Git skills into the active workspace's `skills/` directory. Pin a release tag in production instead of tracking `main`.
@@ -58,8 +58,8 @@ OpenClaw installs Git skills into the active workspace's `skills/` directory. Pi
 ### From a Local Clone
 
 ```bash
-git clone https://github.com/RTPI-ltc/route-openclaw-task.git
-openclaw skills install ./route-openclaw-task --as task-compass
+git clone https://github.com/RTPI-ltc/task-compass.git
+openclaw skills install ./task-compass --as task-compass
 ```
 
 Requirements: OpenClaw, Python 3.10 or newer, and no third-party Python packages. The release is install-and-run tested against the official OpenClaw `2026.6.11` image in a network-disabled, read-only-root container.
@@ -184,4 +184,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Security reports should follow [SECURITY
 
 Code and project-authored content are released under the [MIT License](LICENSE). Training sources and benchmark references retain their original licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the [model card](references/model-card.md).
 
-`route-openclaw-task` remains available as a deprecated compatibility alias. The GitHub repository URL is unchanged so existing clones and release links continue to work.
+`route-openclaw-task` remains available as a deprecated Skill compatibility alias. The repository is now `RTPI-ltc/task-compass`; GitHub redirects the former repository URL for existing clones and links.

@@ -6,8 +6,8 @@
     "name": "RTPI-ltc",
     "url": "https://github.com/RTPI-ltc"
   },
-  "homepage": "https://github.com/RTPI-ltc/route-openclaw-task",
-  "repository": "https://github.com/RTPI-ltc/route-openclaw-task",
+  "homepage": "https://github.com/RTPI-ltc/task-compass",
+  "repository": "https://github.com/RTPI-ltc/task-compass",
   "license": "MIT",
   "keywords": [
     "agent-routing",
@@ -25,7 +25,7 @@
       "Task routing",
       "Safety policy"
     ],
-    "websiteURL": "https://github.com/RTPI-ltc/route-openclaw-task",
+    "websiteURL": "https://github.com/RTPI-ltc/task-compass",
     "defaultPrompt": [
       "Route this task before planning it.",
       "Classify the safest executor and next action."

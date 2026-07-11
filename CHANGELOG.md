@@ -15,7 +15,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/en/1.1.
 ### Changed
 
 - Renamed the product to **Task Compass Skill** with canonical slug `task-compass`.
-- Renamed v0.3 release archives and plugin manifests while retaining the existing GitHub repository URL.
+- Renamed the GitHub repository, v0.3 release archives, and plugin manifests to `task-compass`.
 - Expanded API-key detection to cover punctuation-bearing and additional provider token formats.
 - Preserved the v0.1 router, model tables, and routing contract byte-for-byte.
 
@@ -46,7 +46,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/en/1.1.
 - Offline test suite, release verifier, CI matrix, CodeQL, and tagged archive workflow.
 - ToolSandbox and 1,000-task aggregate benchmark evidence.
 
-[Unreleased]: https://github.com/RTPI-ltc/route-openclaw-task/compare/v0.3.0...HEAD
-[0.3.0]: https://github.com/RTPI-ltc/route-openclaw-task/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/RTPI-ltc/route-openclaw-task/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/RTPI-ltc/route-openclaw-task/releases/tag/v0.1.0
+[Unreleased]: https://github.com/RTPI-ltc/task-compass/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/RTPI-ltc/task-compass/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/RTPI-ltc/task-compass/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/RTPI-ltc/task-compass/releases/tag/v0.1.0
