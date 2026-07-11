@@ -6,7 +6,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/en/1.1.
 
 ### Changed
 
-- Updated and SHA-pinned the GitHub Actions toolchain to Checkout 7.0.0, Setup Python 6.3.0, CodeQL 4.37.0, and Action GH Release 3.0.1.
+- Updated and SHA-pinned the GitHub Actions toolchain to Checkout 7.0.0, Setup Python 6.3.0, CodeQL 4.37.0, and Action GH Release 3.0.1; future Action updates are grouped into one Dependabot PR.
 
 ## [0.1.0] - 2026-07-11
 
