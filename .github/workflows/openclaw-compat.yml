@@ -8,6 +8,9 @@ on:
       - "scripts/**"
       - "assets/**"
       - "references/**"
+      - "integrations/**"
+      - "scripts/build_integrations.py"
+      - "scripts/validate_integrations.py"
       - ".github/workflows/openclaw-compat.yml"
   pull_request:
     paths:
@@ -15,6 +18,9 @@ on:
       - "scripts/**"
       - "assets/**"
       - "references/**"
+      - "integrations/**"
+      - "scripts/build_integrations.py"
+      - "scripts/validate_integrations.py"
       - ".github/workflows/openclaw-compat.yml"
   schedule:
     - cron: "29 4 * * 1"
@@ -35,14 +41,20 @@ jobs:
         with:
           python-version: "3.11"
       - name: Build portable archive
-        run: python scripts/build_archive.py --output-dir dist
-      - name: Prepare clean source and workspace
         run: |
-          mkdir -p "${RUNNER_TEMP}/route-source" "${RUNNER_TEMP}/openclaw-home"
-          tar -xzf dist/route-openclaw-task-v0.1.0.tar.gz \
+          python scripts/build_archive.py --output-dir dist
+          python scripts/build_integrations.py --output-dir dist/integrations
+      - name: Prepare clean source and isolated homes
+        run: |
+          mkdir -p \
+            "${RUNNER_TEMP}/route-source" \
+            "${RUNNER_TEMP}/openclaw-home" \
+            "${RUNNER_TEMP}/openclaw-plugin-home"
+          tar -xzf dist/route-openclaw-task-v0.2.0.tar.gz \
             --strip-components=1 -C "${RUNNER_TEMP}/route-source"
           chmod -R a+rX "${RUNNER_TEMP}/route-source"
-          chmod 777 "${RUNNER_TEMP}/openclaw-home"
+          chmod a+r dist/integrations/route-openclaw-task-openclaw-native-v0.2.0.tar.gz
+          chmod 777 "${RUNNER_TEMP}/openclaw-home" "${RUNNER_TEMP}/openclaw-plugin-home"
       - name: Install with the official OpenClaw CLI
         run: |
           docker run --rm --network none --read-only --cap-drop ALL \
@@ -72,3 +84,41 @@ jobs:
             --goal "Read-only: inspect the repository planner architecture." \
             > "${RUNNER_TEMP}/route.json"
           python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/route.json")); assert p["schema_version"]=="1.0" and p["planner_profile"]=="terminal_cli_workflow" and not p["execution_tools"]'
+      - name: Install the native plugin archive
+        run: |
+          docker run --rm --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+            -v "${RUNNER_TEMP}/openclaw-plugin-home:/home/node:rw" \
+            -v "${PWD}/dist/integrations/route-openclaw-task-openclaw-native-v0.2.0.tar.gz:/plugin.tar.gz:ro" \
+            "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
+            plugins install /plugin.tar.gz
+      - name: Load the native runtime and verify the hook
+        run: |
+          docker run --rm --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+            -v "${RUNNER_TEMP}/openclaw-plugin-home:/home/node:rw" \
+            "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
+            plugins inspect route-openclaw-task --runtime --json \
+            > "${RUNNER_TEMP}/plugin-info.json"
+          python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/plugin-info.json")); q=p["plugin"]; assert q["status"]=="loaded" and q["version"]=="0.2.0" and p["typedHooks"]==[{"name":"before_prompt_build","priority":20}]'
+      - name: Verify the embedded Skill and installed bridge
+        run: |
+          docker run --rm --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+            -v "${RUNNER_TEMP}/openclaw-plugin-home:/home/node:rw" \
+            "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
+            skills info route-openclaw-task --json \
+            > "${RUNNER_TEMP}/plugin-skill-info.json"
+          python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/plugin-skill-info.json")); assert p["eligible"] and p["modelVisible"] and not p["missing"]["bins"]'
+          docker run --rm --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+            -v "${RUNNER_TEMP}/openclaw-plugin-home:/home/node:rw" \
+            "${OPENCLAW_IMAGE}" node --input-type=module -e \
+            'const m=await import("file:///home/node/.openclaw/extensions/route-openclaw-task/router-bridge.mjs"); const d=await m.routePrompt("Read-only: inspect the repository planner architecture."); console.log(m.buildRouteContext(d));' \
+            > "${RUNNER_TEMP}/bridge-context.txt"
+          grep -q '<route-openclaw-task advisory="true">' "${RUNNER_TEMP}/bridge-context.txt"
+          grep -q '"schema_version":"1.0"' "${RUNNER_TEMP}/bridge-context.txt"

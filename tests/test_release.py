@@ -59,7 +59,7 @@ class ReleaseTest(unittest.TestCase):
                 temp_dir,
             ]
             subprocess.run(command, cwd=ROOT, check=True, capture_output=True, text=True)
-            archive = Path(temp_dir) / "route-openclaw-task-v0.1.0.tar.gz"
+            archive = Path(temp_dir) / "route-openclaw-task-v0.2.0.tar.gz"
             with tarfile.open(archive, "r:gz") as handle:
                 members = handle.getmembers()
             self.assertGreater(len(members), 30)

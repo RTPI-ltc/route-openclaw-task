@@ -1,0 +1,53 @@
+{
+  "id": "route-openclaw-task",
+  "name": "Route OpenClaw Task",
+  "description": "Adds a deterministic task route to the prompt before OpenClaw plans or executes.",
+  "version": "0.2.0",
+  "activation": {
+    "onStartup": true
+  },
+  "skills": [
+    "./skills"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true
+      },
+      "pythonBin": {
+        "type": "string",
+        "minLength": 1,
+        "default": "python3"
+      },
+      "timeoutMs": {
+        "type": "integer",
+        "minimum": 100,
+        "maximum": 5000,
+        "default": 1500
+      },
+      "maxPromptChars": {
+        "type": "integer",
+        "minimum": 256,
+        "maximum": 32000,
+        "default": 12000
+      }
+    }
+  },
+  "uiHints": {
+    "enabled": {
+      "label": "Enable task routing"
+    },
+    "pythonBin": {
+      "label": "Python executable"
+    },
+    "timeoutMs": {
+      "label": "Router timeout (ms)"
+    },
+    "maxPromptChars": {
+      "label": "Maximum prompt characters"
+    }
+  }
+}

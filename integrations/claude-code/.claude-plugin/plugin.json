@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "route-openclaw-task",
+  "version": "0.2.0",
+  "description": "Deterministic task routing policy packaged as an Agent Skill.",
+  "author": {
+    "name": "RTPI-ltc",
+    "url": "https://github.com/RTPI-ltc"
+  },
+  "homepage": "https://github.com/RTPI-ltc/route-openclaw-task",
+  "repository": "https://github.com/RTPI-ltc/route-openclaw-task",
+  "license": "MIT",
+  "keywords": [
+    "agent-routing",
+    "planner",
+    "openclaw"
+  ]
+}

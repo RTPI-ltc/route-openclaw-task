@@ -28,6 +28,7 @@
   "files": {
     "generalization-1k.json": "819ec625a3c1053077a8b0f2a45ad893520a8ff03d92dfbb525c8aaa269fd0ea",
     "toolsandbox-integrated.json": "80884e254260f4d8bf4f5196f8bdd49194ad0720d56ef65b58f09c8e5572e704",
-    "toolsandbox-router.json": "2eb7203f2f968b5b5f4b98ed2ddea537121ae8c611b8fbef75093bb8687ca35b"
+    "toolsandbox-router.json": "2eb7203f2f968b5b5f4b98ed2ddea537121ae8c611b8fbef75093bb8687ca35b",
+    "integrations-v0.2.json": "d33fc712162bdea34a0928eba4128d5ec9ee253a31a36fcd7c506e90a55f8db2"
   }
 }

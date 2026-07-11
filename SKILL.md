@@ -2,7 +2,7 @@
 name: route-openclaw-task
 description: Classify task-oriented requests into an OpenClaw planner profile, execution tools, safety policy, model tier, context policy, and next action. Use when deciding how an agent task should be planned or delegated, selecting CLI, file, mobile GUI, mobile CLI, MCP, or deployment executors, determining whether to continue, replan, refuse, or await human approval, or evaluating routing behavior across benchmark tasks.
 license: MIT
-metadata: {"version":"0.1.0","compatibility":"OpenClaw with Python 3.10 or newer; no network access or API key required","openclaw":{"requires":{"bins":["python3"]}}}
+metadata: {"version":"0.2.0","compatibility":"OpenClaw with Python 3.10 or newer; no network access or API key required","openclaw":{"requires":{"bins":["python3"]}}}
 ---
 
 # Route OpenClaw Task

@@ -22,7 +22,11 @@ jobs:
           python scripts/validate_skill.py .
           python scripts/verify_release.py .
       - name: Build archive
-        run: python scripts/build_archive.py --output-dir dist --version "${GITHUB_REF_NAME#v}"
+        run: |
+          python scripts/build_archive.py --output-dir dist --version "${GITHUB_REF_NAME#v}"
+          python scripts/build_integrations.py \
+            --output-dir dist/integrations \
+            --version "${GITHUB_REF_NAME#v}"
       - name: Publish GitHub release
         uses: softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b # v3.0.1
         with:
@@ -30,3 +34,5 @@ jobs:
           files: |
             dist/*.tar.gz
             dist/SHA256SUMS
+            dist/integrations/*.tar.gz
+            dist/integrations/INTEGRATION_SHA256SUMS
