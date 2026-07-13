@@ -5,7 +5,7 @@
 Install the Git repository directly:
 
 ```bash
-openclaw skills install git:RTPI-ltc/route-openclaw-task@v0.2.0
+openclaw skills install git:RTPI-ltc/Task-Compass-Skill@v0.3.0 --as task-compass
 ```
 
 OpenClaw discovers `SKILL.md` at the repository root. When the task matches the trigger description, the agent can invoke `scripts/route_task.py`, inspect the validated JSON, and build its plan without changing OpenClaw source code.
@@ -14,14 +14,24 @@ This is the recommended portable integration.
 
 ## Native Runtime Plugin
 
-Version 0.2 also publishes
-`route-openclaw-task-openclaw-native-v0.2.0.tar.gz` for OpenClaw
+Version 0.3 publishes
+`task-compass-openclaw-native-v0.3.0.tar.gz` for OpenClaw
 `>=2026.6.11 <2026.7.0`:
 
 ```bash
-openclaw plugins install ./route-openclaw-task-openclaw-native-v0.2.0.tar.gz
-openclaw plugins inspect route-openclaw-task --runtime --json
+openclaw plugins install ./task-compass-openclaw-native-v0.3.0.tar.gz
+openclaw plugins inspect task-compass --runtime --json
 ```
+
+Upgrade from the v0.2 native plugin with an explicit replacement:
+
+```bash
+openclaw plugins uninstall route-openclaw-task
+openclaw plugins install ./task-compass-openclaw-native-v0.3.0.tar.gz
+```
+
+Do not install both native plugin archives side by side; OpenClaw preserves the
+old installation directory and both prompt hooks would remain active.
 
 The plugin registers a single `before_prompt_build` hook and embeds this Skill.
 The hook invokes `route_task.py` with Node `execFile`, a bounded prompt length,
@@ -30,7 +40,7 @@ advisory decision and falls back without changing the baseline planner if the
 router fails. It has no execution tool, service, provider, channel, network
 client, or credential access.
 
-The v0.2 release gate installs the archive into the official OpenClaw
+The v0.3 release gate installs the archive into the official OpenClaw
 `2026.6.11` image, loads the runtime, verifies the typed hook and embedded
 Skill, and executes the installed bridge with networking disabled and a
 read-only root filesystem.
@@ -65,9 +75,9 @@ Required invariants:
 
 ## Optional LocalAuditPlanner Adapter
 
-The reference research integration loads the workspace skill when `OPENCLAW_PLANNER_SKILL=route-openclaw-task`, emits `planner_skill_route` and `planner_skill_candidates` audit events, expands missing executor candidates, and passes a bounded `desired_tools_override` into A*/Reflexion search.
+The reference research integration loads the workspace skill when `OPENCLAW_PLANNER_SKILL=task-compass`, emits `planner_skill_route` and `planner_skill_candidates` audit events, expands missing executor candidates, and passes a bounded `desired_tools_override` into A*/Reflexion search. The old `route-openclaw-task` value remains supported by the bundled compatibility Skill.
 
-This adapter is validated against the `LocalAuditPlanner` implementation in `hopercheche/openclaw_optimization`. It is not claimed to be a stable upstream OpenClaw extension point. The v0.2 adapter bundle records the exact target file fingerprints and refuses an upstream-portability claim. Consumers should use the native plugin or JSON contract unless they maintain the same planner API.
+This adapter is validated against the `LocalAuditPlanner` implementation in `hopercheche/openclaw_optimization`. It is not claimed to be a stable upstream OpenClaw extension point. The v0.3 adapter bundle records the exact target file fingerprints and refuses an upstream-portability claim. Consumers should use the native plugin or JSON contract unless they maintain the same planner API.
 
 ## Security Configuration
 
@@ -88,7 +98,7 @@ The router itself does not need an API key or network access.
 Pin a release tag:
 
 ```bash
-openclaw skills install git:RTPI-ltc/route-openclaw-task@v0.2.0
+openclaw skills install git:RTPI-ltc/Task-Compass-Skill@v0.3.0 --as task-compass
 ```
 
 For rollback, reinstall the previous tag. Git-installed skills are reinstalled to update; OpenClaw's tracked `skills update` flow applies to ClawHub installs.

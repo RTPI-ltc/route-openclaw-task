@@ -50,10 +50,10 @@ jobs:
             "${RUNNER_TEMP}/route-source" \
             "${RUNNER_TEMP}/openclaw-home" \
             "${RUNNER_TEMP}/openclaw-plugin-home"
-          tar -xzf dist/route-openclaw-task-v0.2.0.tar.gz \
+          tar -xzf dist/task-compass-v0.3.0.tar.gz \
             --strip-components=1 -C "${RUNNER_TEMP}/route-source"
           chmod -R a+rX "${RUNNER_TEMP}/route-source"
-          chmod a+r dist/integrations/route-openclaw-task-openclaw-native-v0.2.0.tar.gz
+          chmod a+r dist/integrations/task-compass-openclaw-native-v0.3.0.tar.gz
           chmod 777 "${RUNNER_TEMP}/openclaw-home" "${RUNNER_TEMP}/openclaw-plugin-home"
       - name: Install with the official OpenClaw CLI
         run: |
@@ -63,7 +63,7 @@ jobs:
             -v "${RUNNER_TEMP}/openclaw-home:/home/node:rw" \
             -v "${RUNNER_TEMP}/route-source:/source:ro" \
             "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
-            skills install /source --as route-openclaw-task
+            skills install /source --as task-compass
       - name: Check eligibility
         run: |
           docker run --rm --network none --read-only --cap-drop ALL \
@@ -71,7 +71,7 @@ jobs:
             --tmpfs /tmp:rw,noexec,nosuid,size=64m \
             -v "${RUNNER_TEMP}/openclaw-home:/home/node:rw" \
             "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
-            skills info route-openclaw-task --json > "${RUNNER_TEMP}/skill-info.json"
+            skills info task-compass --json > "${RUNNER_TEMP}/skill-info.json"
           python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/skill-info.json")); assert p["eligible"] and not p["missing"]["bins"]'
       - name: Execute the installed router offline
         run: |
@@ -79,7 +79,7 @@ jobs:
             --security-opt no-new-privileges \
             --tmpfs /tmp:rw,noexec,nosuid,size=64m \
             -v "${RUNNER_TEMP}/openclaw-home:/home/node:rw" \
-            -w /home/node/.openclaw/workspace/skills/route-openclaw-task \
+            -w /home/node/.openclaw/workspace/skills/task-compass \
             "${OPENCLAW_IMAGE}" python3 scripts/route_task.py \
             --goal "Read-only: inspect the repository planner architecture." \
             > "${RUNNER_TEMP}/route.json"
@@ -90,7 +90,7 @@ jobs:
             --security-opt no-new-privileges \
             --tmpfs /tmp:rw,noexec,nosuid,size=128m \
             -v "${RUNNER_TEMP}/openclaw-plugin-home:/home/node:rw" \
-            -v "${PWD}/dist/integrations/route-openclaw-task-openclaw-native-v0.2.0.tar.gz:/plugin.tar.gz:ro" \
+            -v "${PWD}/dist/integrations/task-compass-openclaw-native-v0.3.0.tar.gz:/plugin.tar.gz:ro" \
             "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
             plugins install /plugin.tar.gz
       - name: Load the native runtime and verify the hook
@@ -100,9 +100,9 @@ jobs:
             --tmpfs /tmp:rw,noexec,nosuid,size=128m \
             -v "${RUNNER_TEMP}/openclaw-plugin-home:/home/node:rw" \
             "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
-            plugins inspect route-openclaw-task --runtime --json \
+            plugins inspect task-compass --runtime --json \
             > "${RUNNER_TEMP}/plugin-info.json"
-          python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/plugin-info.json")); q=p["plugin"]; assert q["status"]=="loaded" and q["version"]=="0.2.0" and p["typedHooks"]==[{"name":"before_prompt_build","priority":20}]'
+          python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/plugin-info.json")); q=p["plugin"]; assert q["status"]=="loaded" and q["version"]=="0.3.0" and p["typedHooks"]==[{"name":"before_prompt_build","priority":20}]'
       - name: Verify the embedded Skill and installed bridge
         run: |
           docker run --rm --network none --read-only --cap-drop ALL \
@@ -110,15 +110,23 @@ jobs:
             --tmpfs /tmp:rw,noexec,nosuid,size=128m \
             -v "${RUNNER_TEMP}/openclaw-plugin-home:/home/node:rw" \
             "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
-            skills info route-openclaw-task --json \
+            skills info task-compass --json \
             > "${RUNNER_TEMP}/plugin-skill-info.json"
           python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/plugin-skill-info.json")); assert p["eligible"] and p["modelVisible"] and not p["missing"]["bins"]'
           docker run --rm --network none --read-only --cap-drop ALL \
             --security-opt no-new-privileges \
             --tmpfs /tmp:rw,noexec,nosuid,size=128m \
             -v "${RUNNER_TEMP}/openclaw-plugin-home:/home/node:rw" \
+            "${OPENCLAW_IMAGE}" node /app/openclaw.mjs \
+            skills info route-openclaw-task --json \
+            > "${RUNNER_TEMP}/legacy-skill-info.json"
+          python -c 'import json, os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/legacy-skill-info.json")); assert p["eligible"] and "Compatibility alias" in p["description"] and not p["missing"]["bins"]'
+          docker run --rm --network none --read-only --cap-drop ALL \
+            --security-opt no-new-privileges \
+            --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+            -v "${RUNNER_TEMP}/openclaw-plugin-home:/home/node:rw" \
             "${OPENCLAW_IMAGE}" node --input-type=module -e \
-            'const m=await import("file:///home/node/.openclaw/extensions/route-openclaw-task/router-bridge.mjs"); const d=await m.routePrompt("Read-only: inspect the repository planner architecture."); console.log(m.buildRouteContext(d));' \
+            'const m=await import("file:///home/node/.openclaw/extensions/task-compass/router-bridge.mjs"); const d=await m.routePrompt("Read-only: inspect the repository planner architecture."); console.log(m.buildRouteContext(d));' \
             > "${RUNNER_TEMP}/bridge-context.txt"
-          grep -q '<route-openclaw-task advisory="true">' "${RUNNER_TEMP}/bridge-context.txt"
+          grep -q '<task-compass advisory="true">' "${RUNNER_TEMP}/bridge-context.txt"
           grep -q '"schema_version":"1.0"' "${RUNNER_TEMP}/bridge-context.txt"

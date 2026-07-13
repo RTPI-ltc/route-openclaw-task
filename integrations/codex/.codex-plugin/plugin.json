@@ -1,13 +1,13 @@
 {
-  "name": "route-openclaw-task",
-  "version": "0.2.0",
+  "name": "task-compass",
+  "version": "0.3.0",
   "description": "Deterministic task routing policy packaged as a Codex Skill.",
   "author": {
     "name": "RTPI-ltc",
     "url": "https://github.com/RTPI-ltc"
   },
-  "homepage": "https://github.com/RTPI-ltc/route-openclaw-task",
-  "repository": "https://github.com/RTPI-ltc/route-openclaw-task",
+  "homepage": "https://github.com/RTPI-ltc/Task-Compass-Skill",
+  "repository": "https://github.com/RTPI-ltc/Task-Compass-Skill",
   "license": "MIT",
   "keywords": [
     "agent-routing",
@@ -16,7 +16,7 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Route OpenClaw Task",
+    "displayName": "Task Compass Skill",
     "shortDescription": "Classify agent tasks before planning or execution.",
     "longDescription": "Uses a deterministic, auditable Skill to select planning profile, execution tools, policy, context, model tier, and next action.",
     "developerName": "RTPI-ltc",
@@ -25,7 +25,7 @@
       "Task routing",
       "Safety policy"
     ],
-    "websiteURL": "https://github.com/RTPI-ltc/route-openclaw-task",
+    "websiteURL": "https://github.com/RTPI-ltc/Task-Compass-Skill",
     "defaultPrompt": [
       "Route this task before planning it.",
       "Classify the safest executor and next action."

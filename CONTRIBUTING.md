@@ -5,8 +5,8 @@ Contributions are welcome when they improve a repeatable routing workflow rather
 ## Development Setup
 
 ```bash
-git clone https://github.com/RTPI-ltc/route-openclaw-task.git
-cd route-openclaw-task
+git clone https://github.com/RTPI-ltc/Task-Compass-Skill.git
+cd Task-Compass-Skill
 python3 -m unittest discover -s tests -v
 python3 scripts/validate_skill.py .
 python3 scripts/verify_release.py .

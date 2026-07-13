@@ -13,6 +13,9 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
+PACKAGE_NAME = "task-compass"
+CANONICAL_SKILL_NAME = "task-compass"
+LEGACY_SKILL_NAME = "route-openclaw-task"
 
 
 def main() -> None:
@@ -50,7 +53,7 @@ def validate_integrations(
         _verify_hashes(root, locked, "core", errors)
 
     bundles = {
-        name: build_dir / f"route-openclaw-task-{name}-v{version}"
+        name: build_dir / f"{PACKAGE_NAME}-{name}-v{version}"
         for name in ("openclaw-native", "codex", "claude-code", "local-audit-planner")
     }
     for name, bundle in bundles.items():
@@ -62,9 +65,12 @@ def validate_integrations(
         if copied_contract != compatibility:
             errors.append(f"{name}: copied compatibility contract differs from source")
         if name != "local-audit-planner":
-            skill = bundle / "skills/route-openclaw-task"
-            _verify_hashes(skill, locked, f"{name} embedded skill", errors)
-            _smoke_router(skill, name, errors)
+            canonical = bundle / "skills" / CANONICAL_SKILL_NAME
+            legacy = bundle / "skills" / LEGACY_SKILL_NAME
+            _verify_hashes(canonical, locked, f"{name} canonical skill", errors)
+            _verify_hashes(legacy, locked, f"{name} legacy skill", errors)
+            _smoke_router(canonical, f"{name} canonical", errors)
+            _smoke_router(legacy, f"{name} legacy", errors)
 
     if bundles["openclaw-native"].is_dir():
         _validate_openclaw(bundles["openclaw-native"], version, errors)
@@ -90,8 +96,10 @@ def _validate_openclaw(bundle: Path, version: str, errors: list[str]) -> None:
     package = _load_json(bundle / "package.json", errors)
     if manifest is None or package is None:
         return
-    if manifest.get("id") != "route-openclaw-task":
+    if manifest.get("id") != PACKAGE_NAME:
         errors.append("openclaw: incorrect plugin id")
+    if manifest.get("legacyPluginIds") != [LEGACY_SKILL_NAME]:
+        errors.append("openclaw: legacy plugin id is missing")
     if manifest.get("version") != version or package.get("version") != version:
         errors.append("openclaw: package and manifest versions must match release")
     if manifest.get("skills") != ["./skills"]:
@@ -125,7 +133,7 @@ def _validate_codex(bundle: Path, version: str, errors: list[str]) -> None:
     required = {"name", "version", "description", "author", "skills", "interface"}
     if not required.issubset(manifest):
         errors.append("codex: required manifest fields are missing")
-    if manifest.get("name") != bundle.name.split("-codex-v", 1)[0] and manifest.get("name") != "route-openclaw-task":
+    if manifest.get("name") != PACKAGE_NAME:
         errors.append("codex: incorrect plugin name")
     if manifest.get("version") != version or SEMVER.fullmatch(str(manifest.get("version"))) is None:
         errors.append("codex: version must match release strict semver")
@@ -158,7 +166,7 @@ def _validate_claude(
     unknown = sorted(set(manifest) - allowed)
     if unknown:
         errors.append(f"claude-code: unsupported manifest fields: {unknown}")
-    if manifest.get("name") != "route-openclaw-task" or manifest.get("version") != version:
+    if manifest.get("name") != PACKAGE_NAME or manifest.get("version") != version:
         errors.append("claude-code: name/version mismatch")
     if not isinstance(manifest.get("author"), dict) or not manifest["author"].get("name"):
         errors.append("claude-code: author.name is required")

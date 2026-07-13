@@ -1,11 +1,11 @@
 cff-version: 1.2.0
-message: "If you use OpenClaw Task Router in research, please cite this software."
-title: "OpenClaw Task Router"
+message: "If you use Task Compass Skill in research, please cite this software."
+title: "Task Compass Skill"
 type: software
-version: 0.2.0
+version: 0.3.0
 date-released: 2026-07-11
 license: MIT
-repository-code: "https://github.com/RTPI-ltc/route-openclaw-task"
-url: "https://github.com/RTPI-ltc/route-openclaw-task"
+repository-code: "https://github.com/RTPI-ltc/Task-Compass-Skill"
+url: "https://github.com/RTPI-ltc/Task-Compass-Skill"
 authors:
-  - name: "OpenClaw Task Router contributors"
+  - name: "Task Compass Skill contributors"

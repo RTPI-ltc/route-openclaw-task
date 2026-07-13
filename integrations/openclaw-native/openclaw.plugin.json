@@ -1,8 +1,11 @@
 {
-  "id": "route-openclaw-task",
-  "name": "Route OpenClaw Task",
+  "id": "task-compass",
+  "legacyPluginIds": [
+    "route-openclaw-task"
+  ],
+  "name": "Task Compass Skill",
   "description": "Adds a deterministic task route to the prompt before OpenClaw plans or executes.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "activation": {
     "onStartup": true
   },

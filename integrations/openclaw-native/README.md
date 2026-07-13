@@ -1,6 +1,7 @@
 # OpenClaw native integration
 
-This package adds the unchanged `route-openclaw-task` Skill and a thin
+This package adds the unchanged router as canonical `task-compass`, retains
+`route-openclaw-task` as a compatibility alias, and provides a thin
 `before_prompt_build` adapter. The adapter invokes the bundled Python router
 with `execFile` (never a shell), appends only a bounded route decision, and
 falls back to the baseline planner when routing fails.

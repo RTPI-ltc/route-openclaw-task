@@ -1,4 +1,4 @@
 interface:
-  display_name: "OpenClaw Task Router"
+  display_name: "Task Compass Skill"
   short_description: "Route tasks to safe planner policies and executors"
-  default_prompt: "Use $route-openclaw-task to classify this task and return a guarded routing decision."
+  default_prompt: "Use $task-compass to classify this task and return a guarded routing decision."

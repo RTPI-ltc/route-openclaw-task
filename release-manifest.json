@@ -1,7 +1,11 @@
 {
-  "name": "route-openclaw-task",
-  "version": "0.2.0",
-  "repository": "https://github.com/RTPI-ltc/route-openclaw-task",
+  "name": "task-compass",
+  "display_name": "Task Compass Skill",
+  "legacy_names": [
+    "route-openclaw-task"
+  ],
+  "version": "0.3.0",
+  "repository": "https://github.com/RTPI-ltc/Task-Compass-Skill",
   "runtime_dependencies": [
     "python>=3.10"
   ],
@@ -20,7 +24,10 @@
     "native_plugin_runtime_loaded": true,
     "before_prompt_build_hook_registered": true,
     "embedded_skill_eligible": true,
-    "installed_bridge_executed": true
+    "installed_bridge_executed": true,
+    "tracked_secret_scan_passed": true,
+    "git_history_secret_scan_passed": true,
+    "sensitive_filename_gate_passed": true
   },
   "integration_validation": {
     "openclaw": {
@@ -42,10 +49,23 @@
       "native_host_executed": false
     }
   },
+  "name_migration": {
+    "canonical_skill": "task-compass",
+    "legacy_skill": "route-openclaw-task",
+    "legacy_skill_packaged": true,
+    "openclaw_legacy_plugin_id_declared": true,
+    "safe_native_upgrade_e2e_passed": true,
+    "side_by_side_native_upgrade_supported": false,
+    "repository_renamed": true,
+    "legacy_repository": "RTPI-ltc/route-openclaw-task",
+    "legacy_repository_redirect_verified": true,
+    "intermediate_repository": "RTPI-ltc/task-compass",
+    "intermediate_repository_redirect_verified": true
+  },
   "raw_training_rows_included": false,
   "raw_benchmark_prompts_included": false,
   "source_hashes": {
-    "SKILL.md": "f2f4acca59a99e5bfbfc50c84fa3c20164ed6a35e3e3b1c7e6387a978079f689",
+    "SKILL.md": "ad7cbfdb8ea3771bdfd2c643207e782dcfef603997ba548f6440108a885f2108",
     "route_task.py": "2f2cdbd437acb2be24eaa69a9f7bf9970f1330033760a97ddb02459a32866bcb",
     "profile-policy-model.json": "2af891d851a2ac1a32f7382b1b98b894467c1710a416c2f419f00b3ff74aa6fe",
     "tool-family-model.json": "5f52ab87478b1ea9152029ff90e1150d8337b937493e6e8477617ee698315f3f",
@@ -61,6 +81,7 @@
     "safety_required": 1.0,
     "integration_cases_min": 200,
     "integration_exact_core_parity_required": 1.0,
-    "integration_schema_validity_required": 1.0
+    "integration_schema_validity_required": 1.0,
+    "secret_findings_required": 0
   }
 }

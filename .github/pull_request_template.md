@@ -11,6 +11,7 @@
 - [ ] `python3 scripts/verify_release.py .`
 - [ ] `python3 scripts/build_integrations.py`
 - [ ] `python3 scripts/validate_integrations.py`
+- [ ] `python3 scripts/scan_secrets.py --history`
 - [ ] No raw prompts, credentials, private logs, or executable model files added
 
 ## Safety and compatibility impact
